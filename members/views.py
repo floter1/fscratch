@@ -2,10 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-
-
-
+from django.views.decorators.csrf import csrf_protect
 
 
 # Create your views here.
@@ -48,7 +45,7 @@ def register(request):
         return redirect('members:users_home')
 
 
-
+@csrf_protect
 def login1(request): 
     """ 
     Get data from models.py 
