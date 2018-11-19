@@ -1,9 +1,24 @@
+<table border="1">
+
+<tr><td>Post ID</td><td>Title</td><td>Written by:</td></tr>
 {% for art in articles  %}
-{{ art.id }} | {{ art.title }} | {{ art.content }} | {{ art.writer }} | <a href="{% url 'articles:delete' art.id %}">delete</a>
-<a href="{% url 'articles:update' art.id %}">update</a>
-<br/>
+<tr>
+<td>{{ art.id }} </td><td> {{ art.title }} </td><td>{{ art.writer }}</td>
+</tr> 
+<tr>
+<td colspan="100">{{ art.content }}</td> 
+</tr>  
+<tr>
+ <td><a href="{% url 'articles:delete' art.id %}">delete</a></td>
+<td><a href="{% url 'articles:update' art.id %}">update</a></td>
+</tr>
+
 {% endfor %}
 <br/>
+{{request.user.username}} | {{request.user.email}}
+
+<table>
+
 <br/>
 <a href="{% url 'articles:create' %}">create</a>
 <br/>

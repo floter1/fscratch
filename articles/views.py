@@ -97,6 +97,5 @@ def update(request, artId):
 
         article.title = request.POST["title"]
         article.content = request.POST["content"]
-        article.writer = request.POST["writer"]
         article.save()
         return redirect('articles:home')
