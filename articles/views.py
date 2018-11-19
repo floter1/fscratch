@@ -1,9 +1,38 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 from .models import Articles
 
 
+
+def home(request): 
+    """ 
+    Get data from models.py 
+    
+    """ 
+    if not request.user.is_authenticated:
+        
+        
+        return redirect('members:login1')	
+        
+    else:
+        
+        article_list = Articles.objects.all()
+        
+        template = "home.html" 
+        
+        context = { 
+        	'articles' : article_list 
+        	}
+        
+        return render(request, template, context)
+
+
+'''
 def home(request):
     """
     Get data from models.py
@@ -17,6 +46,8 @@ def home(request):
     }
 
     return render(request, template, context)
+'''
+
 
 def create(request):
     """
