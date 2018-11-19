@@ -1,0 +1,10 @@
+{% for art in articles  %}
+{{ art.id }} | {{ art.title }} | {{ art.content }} | {{ art.writer }} | <a href="{% url 'articles:delete' art.id %}">delete</a>
+<a href="{% url 'articles:update' art.id %}">update</a>
+<br/>
+{% endfor %}
+<br/>
+<br/>
+<a href="{% url 'articles:create' %}">create</a>
+<br/>
+<a href="{% url 'members:users_home' %}">Members</a>

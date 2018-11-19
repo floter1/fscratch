@@ -1,0 +1,15 @@
+<table border="1">
+{% for usr in users %}
+<tr>
+<td>{{ usr.id }}</td> | <td>{{ usr.first_name }}</td> | <td>{{ usr.last_name }}</td> | <td>{{ usr.password }}</td> | <td>{{ usr.email }}</td> | <td><a href="{% url 'members:delete' usr.id %}">delete</a></td>
+<td><a href="{% url 'members:update' usr.id %}">update</a></td>
+</tr>
+<br/>
+
+{% endfor %}
+</table>
+<br/>
+<br/>
+<a href="{% url 'members:register' %}">Add Members</a>
+<a href="{% url 'members:login1' %}">Login</a>
+<br/>
