@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
+
 
 
 
@@ -26,6 +29,7 @@ def register(request):
 
         user.first_name = request.POST["first_name"] 
         user.last_name = request.POST["last_name"]   
+        user.age = request.POST["age"] 
         
         user.save()
         
@@ -77,20 +81,37 @@ def login1(request):
             return redirect('members:register') 
 
 
+def logout1(request):
+    logout(request)
     
-def users_home(request1): 
+    return redirect('members:login1') 
+
+
+
+# @login_required(redirect_field_name='members:login1')    
+def users_home(request): 
     """ 
     Get data from models.py 
-    """ 
-    users_list = User.objects.all() 
- 
-    template = "users_home.html" 
-    context = { 
-        'users' : users_list 
-    } 
     
- 
-    return render(request1, template, context) 
+    """ 
+    if not request.user.is_authenticated:
+        
+        
+        return redirect('members:login1')	
+        
+    else:
+        
+        users_list = User.objects.all() 
+        
+        template = "users_home.html" 
+        
+        context = { 
+        	'users' : users_list 
+        	}
+        
+        return render(request, template, context)
+
+    
  
 def create(request1): 
     """ 
