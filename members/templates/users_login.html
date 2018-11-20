@@ -1,3 +1,5 @@
+
+{% if request.user.username == "" %}
 <form method="POST">
   {%csrf_token%}
 
@@ -17,3 +19,13 @@
 
 </table>
 </form>
+
+
+<a href="{% url 'members:register' %}">Add Members</a>
+
+<a href="{% url 'members:login1' %}">Login</a>
+
+{%else%}
+<a href="{% url 'members:logout1' %}">Logout</a>
+
+{%endif%}

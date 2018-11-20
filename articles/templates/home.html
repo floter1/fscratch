@@ -3,19 +3,29 @@
 <tr><td>Post ID</td><td>Title</td><td>Written by:</td></tr>
 {% for art in articles  %}
 <tr>
-<td>{{ art.id }} </td><td> {{ art.title }} </td><td>{{ art.writer }}</td>
+<td>{{ art.id }} </td><td> {{ art.title }} </td><td>{{ art.writer }} |{{request.user.username}}</td>
 </tr> 
 <tr>
 <td colspan="100">{{ art.content }}</td> 
 </tr>  
 <tr>
- <td><a href="{% url 'articles:delete' art.id %}">delete</a></td>
+{% if art.writer == request.user.username %}
+<td><a href="{% url 'articles:delete' art.id %}">delete</a></td>
 <td><a href="{% url 'articles:update' art.id %}">update</a></td>
+
+{% elif request.user.username == "admin" %}
+<td><a href="{% url 'articles:delete' art.id %}">delete</a></td>
+<td><a href="{% url 'articles:update' art.id %}">update</a></td>
+
+
+{%else%}
+<td> You are not {{art.writer}} to edit this</td>
+{%endif%}
 </tr>
 
 {% endfor %}
 <br/>
-{{request.user.username}} | {{request.user.email}}
+{{request.user.username}} | {{request.user.email}} | 
 
 <table>
 

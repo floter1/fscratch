@@ -71,7 +71,7 @@ def login1(request):
             ...
             
             
-            return redirect('members:users_home')
+            return redirect('articles:home')
         else:
             
         
