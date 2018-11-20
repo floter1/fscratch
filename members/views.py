@@ -152,7 +152,7 @@ def update(request, usrId):
         'users' : users 
     } 
  
-    template = "reg_form.html" 
+    template = "update_form.html" 
     if request.method=='GET': 
         return render(request, template, context) 
     else: 

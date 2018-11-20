@@ -1,5 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 app_name = 'articles'
 
@@ -9,4 +12,4 @@ urlpatterns = [
     path('delete/<int:artId>', views.delete, name='delete'),
     path('update/<int:artId>', views.update, name='update'),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
