@@ -4,6 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import path, include
 
+from django.views.generic import TemplateView
+
+
+
 
 # Create your views here.
 from .models import Articles
@@ -31,6 +35,34 @@ def home(request):
         	}
         
         return render(request, template, context)
+        
+        
+class header(TemplateView):
+    template_name = "html/header.html"
+
+class footer(TemplateView):
+    template_name = "html/footer.html"
+        
+'''
+def header(request):
+    """
+    Get data from models.py
+    """
+    template = "html/header.html"
+
+
+    return render(template)
+
+def footer(request):
+    """
+    Get data from models.py
+    """
+    template = "html/footer.html"
+
+
+    return render(request, template)
+'''
+
 
 
 '''

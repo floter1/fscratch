@@ -1,3 +1,5 @@
+{% include 'html/header.html'  %}
+
 <form method="POST">
   {%csrf_token%}
 <b>Title:</b><input type="text" name="title"  value="{{article.title}}"/>
@@ -12,3 +14,5 @@
 <br/>
 <input type="submit" value="save"/>
 </form>
+
+{% include 'html/footer.html'  %}

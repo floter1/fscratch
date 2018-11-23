@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 app_name = 'members'
 
@@ -12,4 +15,4 @@ urlpatterns = [
     path('logout1', views.logout1, name='logout1'),
     path('register/', views.register, name='register'),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -81,7 +81,17 @@ def login1(request):
 def logout1(request):
     logout(request)
     
-    return redirect('members:login1') 
+    if not request.user.is_authenticated:
+        
+        
+        return redirect('members:login1')	
+        
+    else:
+        
+        
+        return redirect('articles:home')
+    
+    
 
 
 

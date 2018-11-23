@@ -25,7 +25,7 @@ SECRET_KEY = 'qy$hwb(km3j)$#0p+fan5=ti3mn1#!s_#n_8o5syeyz3g%eeff'
 # SECURITY WARNING: don't run with debug turned on in production! 
 DEBUG = True
  
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'floter1.sytes.net', '10.23.60.220'] 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'floter1.sytes.net', 'http://floter1.pythonanywhere.com'] 
  
  
 # Application definition 
@@ -119,11 +119,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images) 
 # https://docs.djangoproject.com/en/2.1/howto/static-files/ 
  
-# STATIC_URL = '/static/' 
-STATIC_URL = os.path.join(BASE_DIR, "/static/")
+STATIC_URL = 'base/static/'
+#STATIC_URL = os.path.join(BASE_DIR, 'base/static/')
 
 # STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
+STATIC_ROOT = os.path.join(BASE_DIR, 'base/static/')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
+'''
+# Add these new lines
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+'''
+
+
+'''
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
+'''
+
+# Static files (CSS, JavaScript, Images)
+
+'''
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+'''

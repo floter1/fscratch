@@ -1,45 +1,6 @@
-<html>
-
-<head>
-
-<title>
-{% load static %}
-welcome {{request.user.username}}
-
-</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{% static 'css/jquery.mobile-1.3.0.min.css' %}" />
+{% include 'html/header.html'  %}
 
 
-</head>
-
-<body>
-
-<div data-role="page" class="ui-responsive-panel" data-theme="b">
-
-<div data-role="panel">
-
-</div>
-
-<div data-role="header" data-position="fixed">
-<h1>FS</h1>
-
-</div>
-
-{% static 'html/lotto.html' %}
-{% with stat1="kkkkk" %}
-
-{{stat1}}
-{% endwith %}
-
-
-
-{% include 'html/lotto.html'  %}
-
-<div data-role="content">
-
-{% static 'css/jquery.mobile-1.3.0.min.css'%}
 
 <table border="1">
 
@@ -53,12 +14,12 @@ welcome {{request.user.username}}
 </tr>  
 <tr>
 {% if art.writer == request.user.username %}
-<td><a href="{% url 'articles:delete' art.id %}">delete</a></td>
-<td><a href="{% url 'articles:update' art.id %}">update</a></td>
+<td><a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a></td>
+<td><a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a></td>
 
 {% elif request.user.username == "admin" %}
-<td><a href="{% url 'articles:delete' art.id %}">delete</a></td>
-<td><a href="{% url 'articles:update' art.id %}">update</a></td>
+<td><a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a></td>
+<td><a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a></td>
 
 
 {%else%}
@@ -70,35 +31,25 @@ welcome {{request.user.username}}
 <br/>
 
 
-<table>
+</table>
 
-<br/>
-<a href="{% url 'articles:create' %}">create</a>
-<br/>
-<a href="{% url 'members:users_home' %}">Members</a>
-<br/>
-<a href="{% url 'members:logout1' %}">Logout</a>
 
-</div>
+
+
+{% if request.user.username == "" %}
+<a href="{% url 'members:register' %}"><input type="button" value="SignUp" /></a>
+
+<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+
+{%else%}
+<br/>
+<a href="{% url 'articles:create' %}"> <input type="button" value="create" /> </a>
+<br/>
+<a href="{% url 'members:users_home' %}"><input type="button" value="members" /></a>
+<br/>
+<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
+
+{%endif%}
+
+
 {% include 'html/footer.html'  %}
-
-
-</div>
-
-<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}">
-</script>
-
-<script type="text/javascript" src="{% static 'js/jquery.mobile-1.3.0.min.js' %}">
-</script>
-
-
-
-
-
-<script type="text/javascript">
-app. initialize();
-</script>
-
-
-</body>
-</html>

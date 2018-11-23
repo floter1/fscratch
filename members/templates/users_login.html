@@ -1,3 +1,4 @@
+{% include 'html/header.html'  %}
 
 {% if request.user.username == "" %}
 <form method="POST">
@@ -29,3 +30,5 @@
 <a href="{% url 'members:logout1' %}">Logout</a>
 
 {%endif%}
+
+{% include 'html/footer.html'  %}
