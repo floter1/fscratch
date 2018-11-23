@@ -115,37 +115,21 @@ USE_L10N = True
  
 USE_TZ = True 
  
- 
-# Static files (CSS, JavaScript, Images) 
-# https://docs.djangoproject.com/en/2.1/howto/static-files/ 
- 
+''' 
 STATIC_URL = 'base/static/'
-#STATIC_URL = os.path.join(BASE_DIR, 'base/static/')
 
-# STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'base/static/')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-
-'''
-# Add these new lines
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
 '''
 
+STATIC_URL = 'base/static/'
 
-'''
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
-'''
+# default static files settings for PythonAnywhere.
+# see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
+MEDIA_ROOT = u'/home/floter1/fscratch/media'
+MEDIA_URL = '/media/'
+STATIC_ROOT = u'/home/floter1/fscratch/base/static'
 
-# Static files (CSS, JavaScript, Images)
 
-'''
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
-'''
