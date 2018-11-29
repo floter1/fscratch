@@ -93,10 +93,10 @@ def profile(request):
      
         
     else:
-        mem_create, members_list = Members.objects.get_or_create(user_name = request.user.username)
         members_list = Members.objects.all().filter(user_name = request.user.username)
+ 
         
-        template = "users_profile.html" 
+        template = "users_home.html" 
         
         return render(request, template, {'members' : members_list})  
 
