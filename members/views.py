@@ -13,35 +13,28 @@ def register(request):
     """ 
     Get data from models.py 
     """ 
+    
+    user = User()
+    member = Members()
+    
+    
  
     template = "reg_form.html" 
     if request.method=='GET': 
         return render(request, template) 
     else:
         
-        user = User()
-        
-                
         user = User.objects.create_user(request.POST["username"], request.POST["email"], request.POST["password"])
-
         user.first_name = request.POST["first_name"] 
         user.last_name = request.POST["last_name"]   
-        user.age = request.POST["age"] 
+                
+        member.user_name = request.POST["username"]
+        member.age = request.POST["age"]
+        member.phone = request.POST["phone"]
         
         user.save()
-        
-#        u = User.objects.get(request.POST["username"])
-        
-#        member = Members() 
-#        member.username = request.POST["username"]
-#        member.first_name = user.first_name 
-#        member.last_name = request.POST["last_name"]
-#        member.age = request.POST["age"] 
-#        member.email = request.POST["email"]
-#        member.password = request.POST["password"]
-        
-#        member.save()
-         
+        member.save()
+                 
         return redirect('members:users_home')
 
 
@@ -84,18 +77,32 @@ def logout1(request):
     if not request.user.is_authenticated:
         
         
-        return redirect('members:login1')	
+        return redirect('articles:home')	
         
     else:
         
         
         return redirect('articles:home')
     
-    
+
+def profile(request):
+    if not request.user.is_authenticated:
+        
+        
+        return redirect('members:login1')	
+     
+        
+    else:
+        mem_create, members_list = Members.objects.get_or_create(user_name = request.user.username)
+        members_list = Members.objects.all().filter(user_name = request.user.username)
+        
+        template = "users_profile.html" 
+        
+        return render(request, template, {'members' : members_list})  
 
 
 
-# @login_required(redirect_field_name='members:login1')    
+
 def users_home(request): 
     """ 
     Get data from models.py 
@@ -105,21 +112,25 @@ def users_home(request):
         
         
         return redirect('members:login1')	
+     
         
     else:
         
-        users_list = User.objects.all() 
+        users_list = User.objects.all()
+#        members_list = Members.objects.all().filter(user_name = request.user.username)
+        
+#        mem_create, members_list = Members.objects.get_or_create(user_name = request.user.username)
+#        mem_create.save()
+#        members_list = Members.objects.all()
+
+        members_list = Members.objects.all().filter(user_name = request.user.username)
+ 
         
         template = "users_home.html" 
         
-        context = { 
-        	'users' : users_list 
-        	}
-        
-        return render(request, template, context)
-
-    
- 
+        return render(request, template, {'users' : users_list, 'members' : members_list})  
+               
+         
 def create(request1): 
     """ 
     Get data from models.py 
@@ -168,17 +179,53 @@ def update(request, usrId):
     else: 
  
  
-#        user = User() 
+
         
         users.first_name = request.POST["first_name"] 
         users.last_name = request.POST["last_name"]
- #       member.age = request.POST["age"] 
         users.email = request.POST["email"]
         users.set_password(request.POST["password"])
-        user.save() 
-        return redirect('members:users_home') 
+        users.save()
         
         
         
+        return redirect('members:users_home')
+
+
+def up_profile(request, memId): 
+    """ 
+    Get data from models.py 
+    """ 
+    
+    members = Members.objects.get(id=memId) 
+ 
+    context = { 
+        'members' : members 
+    } 
+ 
+    template = "update_profile.html" 
+    if request.method=='GET': 
+        return render(request, template, context) 
+    else: 
+ 
+ 
+
+        
+        members.age = request.POST["age"]
+        members.phone = request.POST["phone"]
+        members.save()
         
         
+        
+        return redirect('members:profile')
+
+        
+        
+def del_profile(request1, memId): 
+    """ 
+    Get data from models.py 
+    """ 
+ 
+    mem = Members.objects.get(id=memId) 
+    mem.delete() 
+    return redirect('members:users_home') 

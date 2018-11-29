@@ -1,0 +1,52 @@
+{% include 'html/header.html'  %}
+
+<table border="1" style="width: 100%;">
+
+<!-- Profile Start -->
+{% for mem in members %}
+
+<tr>
+<td>ID: {{ mem.id }}</td>  <td>Name: {{ mem.user_name }}</td>  <td>Age:{{ mem.age }}</td>  <td>Phone: {{ mem.phone }}</td>
+
+
+{% if mem.user_name == request.user.username %}
+<td><a href="{% url 'members:del_profile' mem.id %}"><input type="button" value="Delete User" /></a> <a href="{% url 'members:up_profile' mem.id %}"><input type="button" value="Edit User" /></a>
+
+<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+
+{% elif request.user.username == "admin" %}
+<td><a href="{% url 'members:del_profile' mem.id %}"><input type="button" value="Delete User" /></a> <a href="{% url 'members:up_profile' mem.id %}"><input type="button" value="Edit User" /></a>
+
+<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+{%else%}
+<td> You are not {{mem.user_name}} to edit this</td>
+{%endif%}
+
+</tr>
+
+{% endfor %}
+<!-- Profile End -->
+
+</tr>
+
+
+
+
+
+
+</table>
+<br/>
+<br/>
+
+{% if request.user.username == "" %}
+<a href="{% url 'members:register' %}"><input type="button" value="SignUp" /></a>
+
+<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+
+{%else%}
+<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
+
+{%endif%}
+<br/>
+
+{% include 'html/footer.html'  %}

@@ -1,0 +1,21 @@
+{% if request.user.username == "" %}
+<li>
+<a href="{% url 'members:register' %}"><input type="button" value="SignUp" /></a>
+</li>
+
+<li>
+<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+</li>
+{%else%}
+<li>
+<a href="{% url 'articles:home' %}"> <input type="button" value="Home" /> </a>
+</li>
+
+<li>
+<a href="{% url 'members:users_home' %}"><input type="button" value="Member List" /></a>
+</li>
+
+<li>
+<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
+</li>
+{%endif%}

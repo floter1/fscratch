@@ -4,7 +4,7 @@ from django.db import models
 
 class Articles(models.Model):
 	title = models.CharField(max_length=250)
-	content = models.CharField(max_length=250)
+	content = models.TextField(max_length=250)
 	writer = models.CharField(max_length=250)
 
 class Category(models.Model):

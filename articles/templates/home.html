@@ -2,15 +2,25 @@
 
 
 
-<table border="1">
+<table border="0" 
+style="background-color: white;
+border-radius: 20px">
 
-<tr><td>Post ID</td><td>Title</td><td>Written by:</td></tr>
 {% for art in articles  %}
 <tr>
-<td>{{ art.id }} </td><td> {{ art.title }} </td><td>{{ art.writer }} |{{request.user.username}}</td>
+<td>Post ID: {{ art.id }} </td>
+<td>Title:</td><td> {{ art.title }} </td>
+<td>Written by:</td><td>{{ art.writer }} |{{request.user.username}}</td>
 </tr> 
 <tr>
-<td colspan="100">{{ art.content }}</td> 
+
+{% autoescape off %}
+<td colspan="100">
+<hr/>
+{{ art.content|linebreaks }}
+</td> 
+{% endautoescape %}
+
 </tr>  
 <tr>
 {% if art.writer == request.user.username %}

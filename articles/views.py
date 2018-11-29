@@ -95,7 +95,8 @@ def create(request):
         article = Articles()
         article.title = request.POST["title"]
         article.content = request.POST["content"]
-        article.writer = request.POST["writer"]
+        article.writer = request.user.username
+#        article.writer = request.POST["writer"]
         article.save()
         return redirect('articles:home')
 
