@@ -1,0 +1,60 @@
+{% include 'html/header.html'  %}
+
+<table border="1" style="width: 100%;">
+
+<!-- Profile Start -->
+{% for fsell in forsale %}
+
+<tr>
+<td>ID: {{ fsell.id }}</td> <td>Name: {{ fsell.user_name }}</td>  <td>Owner:{{ fsell.owner }}</td> <td>Coins: {{ fsell.coins }}</td> <td>Price: {{ fsell.price }}</td>
+
+
+{% if fsell.user_name == request.user.username %}
+<td> <a href="{% url 'articles:up_bprofile' fsell.id %}"><input type="button" value="Edit Profile" /></a>
+
+<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+
+{% elif request.user.username == "admin" %}
+<td><a href="{% url 'articles:del_bprofile' fsell.id %}"><input type="button" value="Delete Profile" /></a> <a href="{% url 'articles:up_bprofile' fsell.id %}"><input type="button" value="Edit Profile" /></a>
+
+<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+
+{%else%}
+<td>
+
+{% for my in myprofile %}
+{% if my.coins <= fsell.coins %}
+{{my.user_name}}
+<a href="{% url 'members:profile' %}"><input type="button" value="Add Coins" /></a>
+{% else %}
+{{my.user_name}}{{my.id}}
+<a href="{% url 'articles:buy_friend' fsell.id %}"><input type="button" value="Buy Me" /></a>
+{% endif %} 
+{% endfor %}
+
+</td>
+{%endif%}
+
+</tr>
+
+{% endfor %}
+<!-- Profile End -->
+
+</tr>
+
+</table>
+<br/>
+<br/>
+
+{% if request.user.username == "" %}
+<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+
+{%else%}
+
+<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
+<a href="{% url 'members:register' %}"><input type="button" value="SignUp a Friend" /></a>
+
+{%endif%}
+<br/>
+
+{% include 'html/footer.html'  %}

@@ -1,0 +1,65 @@
+{% include 'html/header.html'  %}
+
+
+
+<table border="0" 
+style="background-color: white;
+border-radius: 20px">
+
+{% for art in articles  %}
+<tr>
+<td>Post ID: {{ art.id }} </td>
+<td>Title:</td><td> {{ art.title }} </td>
+<td>Written by:</td><td>{{ art.writer }} |{{request.user.username}}</td>
+</tr> 
+<tr>
+
+{% autoescape off %}
+<td colspan="100">
+<hr/>
+{{ art.content|linebreaks }}
+</td> 
+{% endautoescape %}
+
+</tr>  
+<tr>
+{% if art.writer == request.user.username %}
+<td><a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a></td>
+<td><a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a></td>
+
+{% elif request.user.username == "admin" %}
+<td><a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a></td>
+<td><a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a></td>
+
+
+{%else%}
+<td> You are not {{art.writer}} to edit this</td>
+{%endif%}
+</tr>
+
+{% endfor %}
+<br/>
+
+
+</table>
+
+
+
+
+{% if request.user.username == "" %}
+<a href="{% url 'articles:register' %}"><input type="button" value="SignUp" /></a>
+
+<a href="{% url 'articles:login1' %}"><input type="button" value="Login" /></a>
+
+{%else%}
+<br/>
+<a href="{% url 'articles:create' %}"> <input type="button" value="create" /> </a>
+<br/>
+<a href="{% url 'articles:users_home' %}"><input type="button" value="members" /></a>
+<br/>
+<a href="{% url 'articles:logout1' %}"><input type="button" value="Logout" /></a>
+
+{%endif%}
+
+
+{% include 'html/footer.html'  %}

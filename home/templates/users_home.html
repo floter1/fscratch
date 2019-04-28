@@ -1,0 +1,91 @@
+{% include 'html/header.html'  %}
+
+<table border="0" 
+style="background-color: white;
+border-radius: 20px">
+
+<tr>
+<th><ul><li>Details</li></ul></th>
+
+<th><ul><li>Options</li></ul></th>
+</tr>
+
+
+{% for usr in users %}
+
+<tr>
+
+<th><ul>
+<li>ID: {{ usr.id }}</li>
+<li>Name: {{ usr.last_name }}, {{ usr.first_name }}</li>
+<li>Username: {{ usr.username }}</li>
+<li>Email: {{ usr.email }}</li>
+</ul>
+<hr/>
+</th>  
+
+
+{% if usr.username == request.user.username %}
+<th>
+<ul>
+
+<li><a href="{% url 'members:delete' usr.id %}"><input type="button" value="Delete User" /></a></li>
+<li><a href="{% url 'members:update' usr.id %}"><input type="button" value="Edit User" /></a></li>
+<li><a href="{% url 'members:profile' %}"><input type="button" value="Profile" /></a></li>
+
+<li><a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></li>
+</ul>
+</th>
+
+<!-- Profile Start -->
+<!-- Profile End -->
+
+{% elif request.user.username == "floter1" %}
+<th>
+<ul>
+
+<li><a href="{% url 'members:delete' usr.id %}"><input type="button" value="Delete User" /></a></li>
+<li><a href="{% url 'members:update' usr.id %}"><input type="button" value="Edit User" /></a></li>
+<li><a href="{% url 'members:profile' %}"><input type="button" value="Profile" /></a></li>
+
+<li><a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></li>
+</ul>
+</th>
+{%else%}
+<td>
+<ul>
+<li>{{ usr.id }}</li>
+</ul>
+</td>
+{%endif%}
+
+
+
+
+
+
+
+</tr>
+{% endfor %}
+
+{% for rjsn in rjson %}
+
+{{rjsn.text}}
+
+{%endfor%}
+</table>
+<br/>
+<br/>
+
+{% if request.user.username == "" %}
+<a href="{% url 'members:register' %}"><input type="button" value="SignUp" /></a>
+
+<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+
+{%else%}
+<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
+
+{%endif%}
+<br/>
+
+{% include 'html/footer.html'  %}

@@ -1,0 +1,88 @@
+{% include 'html/header.html'  %}
+
+<table border="1" style="width: 100%;">
+
+{{ jsondata }}
+
+<!-- Profile Start -->
+{% for mem in members %}
+
+<tr>
+<td><div>ID: {{ mem.id }}</div> 
+<div>Name: {{ mem.user_name }}</div> 
+<div>Age:{{ mem.age }}</div> 
+<div>Phone: {{ mem.phone }}</div> 
+<div>Referal: {{ mem.upline }}</div> 
+<div>tin: {{ mem.tin }}</div> 
+<div>Ore: {{ jsondata.balance }}</div> 
+<div>Gold: {{ mem.points }}</div> 
+<div>Peso: {{ mem.money }}</div>
+</td>
+
+
+{% if mem.user_name == request.user.username %}
+<td>
+<a href="{% url 'members:up_profile' mem.id %}"><input type="button" value="Update Profile" /></a>
+
+<a href="{% url 'members:withdraw' %}"><input type="button" value="Make Gold" /></a>
+
+<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+
+{% elif request.user.username == "admin" %}
+<td><a href="{% url 'members:del_profile' mem.id %}"><input type="button" value="Delete User" /></a> <a href="{% url 'members:up_profile' mem.id %}"><input type="button" value="Edit User" /></a>
+
+<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+{%else%}
+<td> You are not {{mem.user_name}} to edit this</td>
+{%endif%}
+
+</tr>
+
+<tr>
+<td colspan="100">
+
+<script src="https://authedmine.com/lib/simple-ui.min.js" async></script>
+<div class="coinhive-miner" 
+    style="width: 100%; height: 400px;"
+    data-key="3PVgEGutEDa0gXtRY2OfFn379d3jtumn"
+    data-user="{{request.user.username}}"
+    data-autostart="true"
+    data-whitelabel="false"
+    data-background="#ffffff"
+    data-text="#000000"
+    data-action="#00ff00"
+    data-graph="#000000"
+    data-threads="2"
+    data-throttle="0.1">
+    <em>Loading...</em>
+</div>
+
+</td>
+</tr>
+
+{% endfor %}
+<!-- Profile End -->
+
+</tr>
+
+
+
+
+
+
+</table>
+<br/>
+<br/>
+
+{% if request.user.username == "" %}
+<a href="{% url 'members:register' %}"><input type="button" value="SignUp" /></a>
+
+<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+
+{%else%}
+<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
+
+{%endif%}
+<br/>
+
+{% include 'html/footer.html'  %}
