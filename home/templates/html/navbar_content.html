@@ -1,13 +1,13 @@
 {% if request.user.username == "" %}
 <li class="active">
-<a href="{% url 'members:register' %">
+<a href="{% url 'articles:register' %}">
 <span class="glyphicon glyphicon-user"></span> 
 Signup
 </a>
 </li>
 
 <li class="active">
-<a href="{% url 'members:login1' %">
+<a href="{% url 'articles:login1' %}">
 <span class="glyphicon glyphicon-user"></span>
 Login
 </a>
@@ -18,13 +18,13 @@ Login
 </li>
 
 <li class="active">
-<a href="{% url 'members:users_home' %">
+<a href="{% url 'articles:users_home' %}">
 Members List
 </a>
 </li>
 
 <li class="active">
-<a href="{% url 'members:logout1' %">
+<a href="{% url 'articles:logout1' %}">
 Logout
 </a>
 </li>

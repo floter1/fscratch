@@ -37,14 +37,15 @@ urlpatterns = [
 
     path('admin/', admin.site.urls), 
     path('home/', include('home.urls')), 
-#    path('users_home/', include('home.urls')),
-    path('avatar/', include('avatar.urls')),
+    path('users_home/', include('home.urls')),
+    path('avatar', include('avatar.urls')),
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
-
+    path('search/', search_views.search, name='search'),
+    path('', include(wagtail_urls)),    
 #end path
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  
 
 
 if settings.DEBUG:

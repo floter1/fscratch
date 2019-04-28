@@ -6,6 +6,9 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.search import index
 
 
+# Create your models here.
+
+
 class HomePage(Page):
     body = RichTextField(blank=True)
 
@@ -13,8 +16,6 @@ class HomePage(Page):
         FieldPanel('body', classname="full"),
     ]
 
-
-# Create your models here.
 
 
 class BlogIndexPage(Page):
@@ -71,4 +72,22 @@ class Members(models.Model):
 	points = models.FloatField(null=True, blank=True, default=0.0)
 	money = models.FloatField(null=True, blank=True, default=0.0)
 	photo = models.ImageField(upload_to='avatar', default='avatars/default/default.jpg')
+
+#class UserProfile(models.model):
+#    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wagtail_userprofile')
+    
+#    avatar = models.ImageField(upload_to='avatar', default='avatars/default/default.jpg')
+    
+#    avatar = models.ImageField(
+#    	verbose_name=_('profile picture'),
+#    	upload_to=upload_avatar_to,
+#    	blank=True,
+#    	)
+
+
+
+
+
+
+
 	    

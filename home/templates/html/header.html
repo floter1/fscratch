@@ -76,11 +76,26 @@ FScratch
       <div class="well"> 
         
         <!-- <img src="bird.jpg" class="img-circle" height="65" width="65" alt="Avatar">  -->
+
+        {% load avatar_tags %}
+        
+        {% if request.user|has_avatar == True %}
+        <img src="DEFAULT_IMAGE" />
+        <p><a href="{% url 'avatar_change' %}">My Profile</a></p>
+        {% avatar user %}
+        {% else %}
+        <div class="label label-info"> </div>
+        Welcome
+        {% endif %}
+
+
+        
 kkkk
+
       </div>
       
       
-      <p class="label label-warning" style="border-radius: 20px;"><a href="{% url 'avatar_change' %">Change your avatar</a></p>
+      <p class="label label-warning" style="border-radius: 20px;"><a href="{% url 'avatar_change' %}">Change your avatar</a></p>
       <p><a href="#">Link</a></p>
       <p><a href="#">Link</a></p>
       
