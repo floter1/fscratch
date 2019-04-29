@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% load wagtailcore_tags %}
 
 {% block body_class %}template-blogpage{% endblock %}
@@ -12,6 +13,6 @@
 
     {{ page.body|richtext }}
 
-    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+    <p><a href="{{ page.get_parent.url }}">Return to Back</a></p>
 
 {% endblock %}

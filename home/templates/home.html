@@ -1,4 +1,4 @@
-{% include 'html/header.html'  %}
+{% include 'home/html/header.html'  %}
 
 
 
@@ -46,6 +46,8 @@ border-radius: 20px">
 
 
 
+
+
 {% if request.user.username == "" %}
 <a href="{% url 'articles:register' %}"><input type="button" value="SignUp" /></a>
 
@@ -62,4 +64,4 @@ border-radius: 20px">
 {%endif%}
 
 
-{% include 'html/footer.html'  %}
+{% include 'home/html/footer.html'  %}
