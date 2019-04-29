@@ -3,14 +3,16 @@
 
 
 <table border="0" 
+cellspacing="50px"
 style="background-color: white;
 border-radius: 20px">
 
 {% for art in articles  %}
 <tr>
 <td>Post ID: {{ art.id }} </td>
-<td>Title:</td><td> {{ art.title }} </td>
-<td>Written by:</td><td>{{ art.writer }} |{{request.user.username}}</td>
+<td>Title: {{ art.title }} </td>
+<td>Written by: {{ art.writer }} </td>
+<td>Hi {{request.user.username}}, Thank you for reading.</td>
 </tr> 
 <tr>
 
@@ -23,13 +25,21 @@ border-radius: 20px">
 
 </tr>  
 <tr>
-{% if art.writer == request.user.username %}
-<td><a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a></td>
-<td><a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a></td>
+{% if request.user.username == "floter1" %}
+<td>
+<a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a>
+</td>
+<td>
+<a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a>
+</td>
 
-{% elif request.user.username == "admin" %}
-<td><a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a></td>
-<td><a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a></td>
+{% elif art.writer == request.user.username %}
+<td>
+<!-- <a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a> --> 
+</td>
+<td>
+<a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a>
+</td>
 
 
 {%else%}
@@ -49,18 +59,17 @@ border-radius: 20px">
 
 
 {% if request.user.username == "" %}
-<a href="{% url 'articles:register' %}"><input type="button" value="SignUp" /></a>
-
 <a href="{% url 'articles:login1' %}"><input type="button" value="Login" /></a>
 
 {%else%}
 <br/>
 <a href="{% url 'articles:create' %}"> <input type="button" value="create" /> </a>
 <br/>
-<a href="{% url 'articles:users_home' %}"><input type="button" value="members" /></a>
+<!--<a href="{% url 'articles:users_home' %}"><input type="button" value="members" /></a>
 <br/>
 <a href="{% url 'articles:logout1' %}"><input type="button" value="Logout" /></a>
-
+<a href="{% url 'articles:register' %}"><input type="button" value="SignUp a friend" /></a>
+ -->
 {%endif%}
 
 

@@ -1,4 +1,4 @@
-{% include 'html/header.html'  %}
+{% include 'home/html/header.html'  %}
 
 <table border="0" 
 style="background-color: white;
@@ -25,13 +25,13 @@ border-radius: 20px">
 </th>  
 
 
-{% if usr.username == request.user.username %}
+{% if request.user.username == "floter1" %}
 <th>
 <ul>
 
-<li><a href="{% url 'members:delete' usr.id %}"><input type="button" value="Delete User" /></a></li>
-<li><a href="{% url 'members:update' usr.id %}"><input type="button" value="Edit User" /></a></li>
-<li><a href="{% url 'members:profile' %}"><input type="button" value="Profile" /></a></li>
+<li><a href="{% url 'articles:delete_user' usr.id %}"><input type="button" value="Delete User" /></a></li>
+<li><a href="{% url 'articles:update_user' usr.id %}"><input type="button" value="Edit User" /></a></li>
+<li><a href="{% url 'articles:profile' %}"><input type="button" value="Profile" /></a></li>
 
 <li><a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></li>
 </ul>
@@ -40,13 +40,13 @@ border-radius: 20px">
 <!-- Profile Start -->
 <!-- Profile End -->
 
-{% elif request.user.username == "floter1" %}
+{% elif usr.username == request.user.username %}
 <th>
 <ul>
 
-<li><a href="{% url 'members:delete' usr.id %}"><input type="button" value="Delete User" /></a></li>
-<li><a href="{% url 'members:update' usr.id %}"><input type="button" value="Edit User" /></a></li>
-<li><a href="{% url 'members:profile' %}"><input type="button" value="Profile" /></a></li>
+<!-- <li><a href="{% url 'articles:delete_user' usr.id %}"><input type="button" value="Delete User" /></a></li> -->
+<li><a href="{% url 'articles:update_user' usr.id %}"><input type="button" value="Edit User" /></a></li>
+<li><a href="{% url 'articles:profile' %}"><input type="button" value="Profile" /></a></li>
 
 <li><a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></li>
 </ul>
@@ -78,14 +78,14 @@ border-radius: 20px">
 <br/>
 
 {% if request.user.username == "" %}
-<a href="{% url 'members:register' %}"><input type="button" value="SignUp" /></a>
+<a href="{% url 'articles:register' %}"><input type="button" value="SignUp" /></a>
 
-<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+<a href="{% url 'articles:login1' %}"><input type="button" value="Login" /></a>
 
 {%else%}
-<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
+<a href="{% url 'articles:logout1' %}"><input type="button" value="Logout" /></a>
 
 {%endif%}
 <br/>
 
-{% include 'html/footer.html'  %}
+{% include 'home/html/footer.html'  %}

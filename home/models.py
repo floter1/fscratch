@@ -8,7 +8,7 @@ from wagtail.search import index
 
 # Create your models here.
 
-
+#wagtail start
 class HomePage(Page):
     body = RichTextField(blank=True)
 
@@ -41,6 +41,10 @@ class BlogPage(Page):
         FieldPanel('intro'),
         FieldPanel('body', classname="full"),
     ]
+
+#wagtail end
+
+#Articles start
     
 class Articles(models.Model):
     title = models.CharField(max_length=250)
@@ -62,6 +66,10 @@ class Bsell(models.Model):
     owner = models.CharField(max_length=250, default="admin")
     coins = models.FloatField(null=True, blank=True, default=0.0)
     price = models.FloatField(null=True, blank=True, default=1.0)
+
+#articles end
+
+#Members start
     
 class Members(models.Model):
 	user_name = models.CharField(max_length=250)
@@ -84,7 +92,7 @@ class Members(models.Model):
 #    	blank=True,
 #    	)
 
-
+#Members End
 
 
 

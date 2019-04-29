@@ -27,6 +27,7 @@ from django.conf import settings
 
 # Create your views here.
 from .models import Articles
+from .models import Members 
 from .models import Bsell
 #from members.models import Members
 
@@ -472,7 +473,7 @@ def login1(request):
         else:
             
         
-            return redirect('articles:register') 
+            return redirect('articles:home') 
 
 
 def logout1(request):

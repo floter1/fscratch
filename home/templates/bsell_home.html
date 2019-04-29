@@ -1,6 +1,6 @@
-{% include 'html/header.html'  %}
+{% include 'home/html/header.html'  %}
 
-<table border="1" style="width: 100%;">
+<table border="0" style="width: 100%;">
 
 <!-- Profile Start -->
 {% for fsell in forsale %}
@@ -9,14 +9,17 @@
 <td>ID: {{ fsell.id }}</td> <td>Name: {{ fsell.user_name }}</td>  <td>Owner:{{ fsell.owner }}</td> <td>Coins: {{ fsell.coins }}</td> <td>Price: {{ fsell.price }}</td>
 
 
-{% if fsell.user_name == request.user.username %}
-<td> <a href="{% url 'articles:up_bprofile' fsell.id %}"><input type="button" value="Edit Profile" /></a>
+{% if request.user.username == "floter1" %}
 
+<td>
+<a href="{% url 'articles:del_bprofile' fsell.id %}"><input type="button" value="Delete Profile" /></a>
+<a href="{% url 'articles:up_bprofile' fsell.id %}"><input type="button" value="Edit Profile" /></a>
 <a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
 
-{% elif request.user.username == "admin" %}
-<td><a href="{% url 'articles:del_bprofile' fsell.id %}"><input type="button" value="Delete Profile" /></a> <a href="{% url 'articles:up_bprofile' fsell.id %}"><input type="button" value="Edit Profile" /></a>
+{% elif fsell.user_name == request.user.username %}
+<td>
 
+<a href="{% url 'articles:up_bprofile' fsell.id %}"><input type="button" value="Edit Profile" /></a>
 <a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
 
 {%else%}
@@ -25,7 +28,7 @@
 {% for my in myprofile %}
 {% if my.coins <= fsell.coins %}
 {{my.user_name}}
-<a href="{% url 'members:profile' %}"><input type="button" value="Add Coins" /></a>
+<a href="{% url 'articles:profile' %}"><input type="button" value="Add Coins" /></a>
 {% else %}
 {{my.user_name}}{{my.id}}
 <a href="{% url 'articles:buy_friend' fsell.id %}"><input type="button" value="Buy Me" /></a>
@@ -47,14 +50,14 @@
 <br/>
 
 {% if request.user.username == "" %}
-<a href="{% url 'members:login1' %}"><input type="button" value="Login" /></a>
+<a href="{% url 'articles:login1' %}"><input type="button" value="Login" /></a>
 
 {%else%}
 
-<a href="{% url 'members:logout1' %}"><input type="button" value="Logout" /></a>
-<a href="{% url 'members:register' %}"><input type="button" value="SignUp a Friend" /></a>
+<a href="{% url 'articles:logout1' %}"><input type="button" value="Logout" /></a>
+<a href="{% url 'articles:register' %}"><input type="button" value="SignUp a Friend" /></a>
 
 {%endif%}
 <br/>
 
-{% include 'html/footer.html'  %}
+{% include 'home/html/footer.html'  %}
