@@ -31,9 +31,9 @@ border-radius: 20px">
 
 <li><a href="{% url 'articles:delete_user' usr.id %}"><input type="button" value="Delete User" /></a></li>
 <li><a href="{% url 'articles:update_user' usr.id %}"><input type="button" value="Edit User" /></a></li>
-<li><a href="{% url 'articles:profile' %}"><input type="button" value="Profile" /></a></li>
+<li><a href="{% url 'articles:profile' usr.id %}"><input type="button" value="Profile" /></a></li>
 
-<li><a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></li>
+<li><a href="{% url 'articles:timeline' %}"><input type="button" value="timeline" /></a></li>
 </ul>
 </th>
 
@@ -48,7 +48,7 @@ border-radius: 20px">
 <li><a href="{% url 'articles:update_user' usr.id %}"><input type="button" value="Edit User" /></a></li>
 <li><a href="{% url 'articles:profile' %}"><input type="button" value="Profile" /></a></li>
 
-<li><a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></li>
+<li><a href="{% url 'articles:timeline' %}"><input type="button" value="timeline" /></a></li>
 </ul>
 </th>
 {%else%}
@@ -88,4 +88,58 @@ border-radius: 20px">
 {%endif%}
 <br/>
 
+
 {% include 'home/html/footer.html'  %}
+
+
+
+<!-- Product test start 
+
+     {% if saved %}
+         <strong>Your profile was saved.</strong>
+      {% endif %}
+      
+      {% if not saved %}
+         <strong>Your profile was not saved.</strong>
+      {% endif %}
+      
+
+      <form name = "form" enctype = "multipart/form-data" 
+         action = "" method = "POST" >
+		 {% csrf_token %}
+         
+         <div style = "max-width:470px;">
+            <center>  
+               <input type = "text" style = "margin-left:20%;" 
+               placeholder = "Name" name = "name" />
+            </center>
+         </div>
+			
+         <br>
+         
+         <div style = "max-width:480px;">
+            <center> 
+               <input type = "file" style = "margin-left:20%;" 
+                  placeholder = "Picture" name = "picture" />
+            </center>
+         </div>
+			
+         <br>
+         
+         <div style = "max-width:480px;">
+            <center> 
+            
+               <button type = "submit" value = "Login" >
+                  <strong>Upload</strong>
+               </button>
+               
+            </center>
+         </div>
+         
+      </form>
+
+
+
+ Product test end -->
+
+

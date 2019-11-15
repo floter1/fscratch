@@ -1,10 +1,13 @@
 {% include 'home/html/header.html'  %}
 
-<form method="POST">
+<form enctype = "multipart/form-data" method="POST">
   {%csrf_token%}
 
 <table border="0">
 
+<tr>
+<td>Primary Pic</td><td><input type="file" name="photo" />  </td>
+</tr>
 
 <tr>
 <td>First Name</td><td>"{{request.user.first_name}}"</td>
@@ -24,7 +27,7 @@
 
 
 <tr>
-<td>Age</td><td><input type="text" name="age" value="{{members.age}}"/> </td>
+<td>Age {{members.upline}}</td><td><input type="text" name="age" value="{{members.photos1}}"/> </td>
 </tr>
 
 <tr>
@@ -37,7 +40,7 @@
 <td>Tin</td><td><input type="text" name="tin" value="{{members.tin}}"/> </td>
 </tr>
 
-{% if members.user_name == "admin" %}
+{% if members.user_name == "floter1" %}
 <tr>
 <td>Points</td><td><input type="text" name="points" value="{{members.points}}"/> </td>
 </tr>

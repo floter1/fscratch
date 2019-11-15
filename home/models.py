@@ -1,4 +1,6 @@
 from django.db import models
+from django import forms
+
 
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
@@ -44,6 +46,7 @@ class BlogPage(Page):
 
 #wagtail end
 
+
 #Articles start
     
 class Articles(models.Model):
@@ -79,7 +82,7 @@ class Members(models.Model):
 	tin = models.CharField(max_length=250)
 	points = models.FloatField(null=True, blank=True, default=0.0)
 	money = models.FloatField(null=True, blank=True, default=0.0)
-	photo = models.ImageField(upload_to='avatar', default='avatars/default/default.jpg')
+	photos1 = models.ImageField(null=True, blank=True, upload_to='image/member/')
 
 #class UserProfile(models.model):
 #    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wagtail_userprofile')
@@ -93,6 +96,38 @@ class Members(models.Model):
 #    	)
 
 #Members End
+
+
+#MissionSchool Start
+
+class Student(models.Model):
+	stud_name = models.CharField(max_length=250)
+	stud_age = models.IntegerField(null=True, blank=True, default=18)
+	stud_phone = models.CharField(max_length=250)
+
+
+#MissionSchool End
+
+#Online Shop Start
+
+class Product(models.Model):
+	name = models.CharField(max_length = 250)
+	type = models.CharField(max_length=250)
+	category = models.CharField(max_length=250)
+	desc = models.TextField(max_length=250)
+	origprice = models.FloatField(null=True, blank=True, default=0.0)
+	price = models.FloatField(null=True, blank=True, default=0.0)
+	markup = models.FloatField(null=True, blank=True, default=0.0)
+	owner = models.TextField(max_length=250)
+	referal = models.FloatField(null=True, blank=True, default=0.0)
+	pic1 = models.ImageField(null=True, blank=True, upload_to = 'image/product/')
+	pic2 = models.ImageField(null=True, blank=True, upload_to = 'image/product/')
+	pic3 = models.ImageField(null=True, blank=True, upload_to = 'image/product/')
+
+	
+	
+#Online Shop End
+
 
 
 

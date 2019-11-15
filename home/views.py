@@ -9,13 +9,16 @@ from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 
+from django.db import transaction
+
+# from Articles.models import ImageUploadForm, Upload
 
 #start
 
 #end
 
 # Create your views here.
-#from .models import Members 
+
 
 
 
@@ -26,12 +29,14 @@ from django.conf import settings
 
 
 # Create your views here.
-from .models import Articles
-from .models import Members 
-from .models import Bsell
-#from members.models import Members
+from .viewmodels import HomeViewModel
+from .models import Articles, Members, Bsell 
+from .models import Product
 
-#start Articles
+
+
+
+#Friends for Sale Start
 def buy_friend(request, fsellId): 
     """ 
     Get data from models.py 
@@ -171,7 +176,7 @@ def up_bprofile(request, profId):
 
         
         
-def del_bprofile(request1, profId): 
+def del_bprofile(request, profId): 
     """ 
     Get data from models.py 
     """ 
@@ -180,12 +185,12 @@ def del_bprofile(request1, profId):
     prof.delete() 
     return redirect('articles:profile') 
 
+#Friends for Sale End
 
 
+#start Articles
 
-
-
-def home(request): 
+def timeline(request): 
     """ 
     Get data from models.py 
     
@@ -199,7 +204,7 @@ def home(request):
         
         article_list = Articles.objects.all()
         
-        template = "home.html" 
+        template = "timeline.html" 
         
         context = { 
         	'articles' : article_list 
@@ -214,44 +219,6 @@ class header(TemplateView):
 class footer(TemplateView):
     template_name = "html/footer.html"
         
-'''
-def header(request):
-    """
-    Get data from models.py
-    """
-    template = "html/header.html"
-
-
-    return render(template)
-
-def footer(request):
-    """
-    Get data from models.py
-    """
-    template = "html/footer.html"
-
-
-    return render(request, template)
-'''
-
-
-
-'''
-def home(request):
-    """
-    Get data from models.py
-    """
-
-    article_list = Articles.objects.all()
-
-    template = "home.html"
-    context = {
-        'articles' : article_list
-    }
-
-    return render(request, template, context)
-'''
-
 
 def create(request):
     """
@@ -269,7 +236,7 @@ def create(request):
         article.writer = request.user.username
 #        article.writer = request.POST["writer"]
         article.save()
-        return redirect('articles:home')
+        return redirect('articles:timeline')
 
 def delete(request, artId):
     """
@@ -278,7 +245,7 @@ def delete(request, artId):
 
     art = Articles.objects.get(id=artId)
     art.delete()
-    return redirect('articles:home')
+    return redirect('articles:timeline')
 
 def update(request, artId):
     """
@@ -303,12 +270,12 @@ def update(request, artId):
         article.title = request.POST["title"]
         article.content = request.POST["content"]
         article.save()
-        return redirect('articles:home')
+        return redirect('articles:timeline')
 
 #end Articles
 
 
-#start Members
+
 def withdraw(request):
     
     import requests
@@ -366,229 +333,238 @@ def buy(request):
     members.save()
     return redirect('articles:profile') 
 
-def profile(request):
-    
-    from urllib.request import urlopen
-    import json
-    
-    response = urlopen("https://api.coinhive.com/user/balance?name=" + request.user.username + "&secret=97tEENX9hYZoMj6AbKFHYzEYCx7WRk9R")
-    
-    data = json.load(response)
-    
-    if not request.user.is_authenticated:
-        
-        
-        return redirect('articles:login1')	
-     
-        
-    else:
-        mem_create, members_list = Members.objects.get_or_create(user_name = request.user.username)
-        mem_create.save()        
-        members_list = Members.objects.all().filter(user_name = request.user.username)
-        
-        template = "users_profile.html" 
-        
-        return render(request, template, {'members' : members_list, "jsondata" : data})  
 
 
 
-
-
+#start Members
 def users_home(request): 
-    """ 
-    Get data from models.py 
-    
-    """ 
-    if not request.user.is_authenticated:
-        
-        
-        return redirect('articles:login1')	
-     
-        
-    else:
-        users_list = User.objects.all()
-        
-        template = "users_home.html" 
-        
-        return render(request, template, {'users' : users_list})  
-
  
+	if not request.user.is_authenticated:
 
-def register(request): 
-    """ 
-    Get data from models.py 
-    """ 
-    
-    user = User()
-    member = Members()
-    
-    
- 
-    template = "reg_form.html" 
-    if request.method=='GET': 
-        return render(request, template) 
-    else:
-        
-        user = User.objects.create_user(request.POST["username"], request.POST["email"], request.POST["password"])
-        user.first_name = request.POST["first_name"] 
-        user.last_name = request.POST["last_name"]   
-                
-        member.user_name = request.POST["username"]
-#        member.age = request.POST["age"]
-#        member.phone = request.POST["phone"]
-        
-        user.save()
-        member.save()
-                 
-        return redirect('articles:users_home')
+		return redirect('articles:login1')	
 
+	else:
+		users_list = User.objects.all()
+		mem_list = Members.objects.all()
+		template = "users_home.html" 
+		context = { 
+		'users' : users_list,
+		'members' : mem_list
+		} 
+
+		return render(request, template, context)  
+		
 
 @csrf_protect
 def login1(request): 
-    """ 
-    Get data from models.py 
-    """ 
-       
-    user = User.objects.all() 
- 
-    context = { 
-        'user' : user 
-    } 
+	""" 
+	Get data from models.py 
+	""" 
 
- 
-    template = "users_login.html" 
-    if request.method=='GET': 
-        return render(request, template, context) 
-    else:
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
+	user = User.objects.all() 
+
+	context = { 
+		'user' : user 
+	}
+
+	template = "users_login.html" 
+	if request.method=='GET': 
+		return render(request, template, context) 
+	else:
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
             # Redirect to a success page.
-            ...
-            
-            
-            return redirect('articles:home')
-        else:
-            
-        
-            return redirect('articles:home') 
+			...
+
+			return redirect('articles:prodhome')
+		else:
+
+			return redirect('articles:prodhome') 
 
 
 def logout1(request):
     logout(request)
     
-    return redirect('articles:home')
-    
+    return redirect('articles:prodhome')
 
-         
-def create_user(request1): 
-    """ 
-    Get data from models.py 
-    """ 
- 
-    template = "members_form.html" 
-    if request1.method=='GET': 
-        return render(request1, template) 
-    else: 
- 
-        member = Members() 
-        member.first_name = request1.POST["first_name"] 
-        member.last_name = request1.POST["last_name"]
-        member.age = request1.POST["age"] 
-        member.email = request1.POST["email"]
-        member.password = request1.POST["password"]
-        
-        member.save()
-        
-         
-        return redirect('articles:users_home') 
- 
-def delete_user(request1, usrId): 
-    """ 
-    Get data from models.py 
-    """ 
- 
-    usr = User.objects.get(id=usrId) 
-    usr.delete() 
-    return redirect('articles:users_home') 
- 
+def register(request): 
+	""" 
+	Get data from models.py 
+	""" 
+
+	home = HomeViewModel()
+	template = "reg_form.html" 
+	
+	if request.method=='GET': 
+		return render(request, template) 
+	else:
+
+		home.create_user(request)
+		return redirect('articles:users_home')
+
+
 def update_user(request, usrId): 
-    """ 
-    Get data from models.py 
-    """ 
-    
-    users = User.objects.get(id=usrId) 
- 
-    context = { 
-        'users' : users 
-    } 
- 
-    template = "update_form.html" 
-    if request.method=='GET': 
-        return render(request, template, context) 
-    else: 
 
-        users.first_name = request.POST["first_name"] 
-        users.last_name = request.POST["last_name"]
-        users.email = request.POST["email"]
-        users.set_password(request.POST["password"])
-        users.save()
-        
-        
-        
-        return redirect('articles:users_home')
+#	users = User.objects.get(id=usrId) 
+	home = HomeViewModel()    
+
+	template = "update_form.html" 
+	context = { 
+		'users' : home.get_user_by_id(usrId)  
+	} 
+
+	if request.method=='GET': 
+		return render(request, template, context) 
+	else: 
+		home.up_user(request, usrId)
+		return redirect('articles:users_home')
+ 
+def delete_user(request, usrId): 
+	""" 
+	Get data from models.py 
+	""" 
+	home = HomeViewModel() 
+	home.del_user(request, usrId)
+	return redirect('articles:users_home') 
+
+def profile(request, memId):
+    
+#    from urllib.request import urlopen
+#    import json
+    
+#    response = urlopen("https://api.coinhive.com/user/balance?name=" + request.user.username + "&secret=97tEENX9hYZoMj6AbKFHYzEYCx7WRk9R")
+    
+#    data = json.load(response)
+
+#	home = HomeViewModel()    
+	if not request.user.is_authenticated:
+
+		return redirect('articles:login1')	
+
+	else:
+	
+		user1 = Members.objects.get(id=memId)
+
+#		home.show_profile(request)
+		template = "users_profile.html" 
+		context = { 
+			'mem' : user1
+			}
+
+#        return render(request, template, {'members' : members_list, "jsondata" : data})  
+
+		return render(request, template, context)  
+
+"""		
+def create_profile(request): 
+
+	template = "members_form.html" 
+	if request.method=='GET': 
+		return render(request, template) 
+	else: 
+ 
+		member = Members() 
+		member.first_name = request.POST["first_name"] 
+		member.last_name = request.POST["last_name"]
+		member.age = request.POST["age"] 
+		member.email = request.POST["email"]
+		member.password = request.POST["password"]
+		member.save()
+ 
+		return redirect('articles:users_home') 
+"""
 
 
 def up_profile(request, memId): 
-    """ 
-    Get data from models.py 
-    """ 
-    
-    members = Members.objects.get(id=memId) 
- 
-    context = { 
-        'members' : members 
-    } 
- 
-    template = "update_profile.html" 
-    if request.method=='GET': 
-        return render(request, template, context) 
-    else:
-        
-        if members.user_name=='admin':
-            
-            members.age = request.POST["age"]
-            members.phone = request.POST["phone"]
-            members.upline = request.POST["upline"]
-            members.tin = request.POST["tin"]
-            members.points = request.POST["points"]
-            members.money = request.POST["money"]
-            members.save()
-        
-        else:
-            members.age = request.POST["age"]
-            members.phone = request.POST["phone"]
-            members.upline = request.POST["upline"]
-            members.tin = request.POST["tin"]
-            members.save()
+	""" 
+	Get data from models.py 
+	""" 
 
+	home = HomeViewModel()
+#	members = Members.objects.get(id=memId) 
+	template = "update_profile.html" 
+	context = { 
+		'members' : home.get_profile_by_id(memId)
+	} 
 
-            
-        
-        
-        return redirect('articles:profile')
+	if request.method=='GET': 
+		return render(request, template, context) 
+	else:
 
-        
-        
-def del_profile(request1, memId): 
-    """ 
-    Get data from models.py 
-    """ 
- 
-    mem = Members.objects.get(id=memId) 
-    mem.delete() 
-    return redirect('articles:users_home') 
+		home.update_profile(request, memId)
+		return redirect('articles:profile')
+
+def del_profile(request, memId): 
+
+	home = HomeViewModel()
+	home.delete_profile(request, memId)
+
+	return redirect('articles:users_home') 
 
 #end Members
+
+#start Shop
+
+def prodhome(request): 
+	""" 
+	Get data from models.py 
+	""" 
+	if not request.user.is_authenticated:
+
+		return redirect('articles:login1')	
+
+	else:
+
+		product_list = Product.objects.all()
+
+		template = "producthome.html" 
+		context = { 
+			'products' : product_list 
+			}
+		
+		return render(request, template, context)
+
+def prodcreate(request):
+	"""
+	Get data from models.py
+	"""
+	
+	home = HomeViewModel()
+	template = "productmake.html"
+	if request.method=='GET':
+		return render(request, template)
+	else:
+		home.create_product(request)
+
+		return redirect('articles:prodhome')
+
+def produpdate(request, prodId):
+
+	home = HomeViewModel()
+	template = "productmake.html"
+	context = {
+		'products' : home.get_product_by_id(prodId)
+	}
+	
+	if request.method == "POST":
+		
+		home.update_product(request, prodId)
+		return redirect('articles:prodhome')
+
+	return render(request, template, context)		
+		
+def proddelete(request, prodId):
+	home = HomeViewModel()
+
+	home.delete_product(request, prodId)
+	return redirect('articles:prodhome')
+	
+	
+
+	
+
+#end Shop
+

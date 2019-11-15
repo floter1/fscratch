@@ -5,8 +5,16 @@
 {{ jsondata }}
 
 <!-- Profile Start -->
-{% for mem in members %}
+<!-- % for mem in members % -->
+{%csrf_token%}
 
+<tr>
+<td colspan="100">
+<div><center>
+<img src="media/{{ mem.photos1 }}" class="img-rectangle" height="50%" width="50%"><</center>
+</div>
+</td>
+</tr>
 <tr>
 <td><div>ID: {{ mem.id }}</div> 
 <div>Name: {{ mem.user_name }}</div> 
@@ -17,27 +25,34 @@
 <div>Ore: {{ jsondata.balance }}</div> 
 <div>Gold: {{ mem.points }}</div> 
 <div>Peso: {{ mem.money }}</div>
+
 </td>
 
+{% if request.user.username == "floter1" %}
 
-{% if mem.user_name == request.user.username %}
 <td>
+<!--
+<td><a href="{% url 'articles:del_profile' mem.id %}"><input type="button" value="Delete User" /></a> 
+-->
+
 <a href="{% url 'articles:up_profile' mem.id %}"><input type="button" value="Update Profile" /></a>
 
 <a href="{% url 'articles:withdraw' %}"><input type="button" value="Make Gold" /></a>
 
-<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+<a href="{% url 'articles:timeline' %}"><input type="button" value="timeline" /></a></td>
 
-{% elif request.user.username == "admin" %}
-<td><a href="{% url 'articles:del_profile' mem.id %}"><input type="button" value="Delete User" /></a> <a href="{% url 'members:up_profile' mem.id %}"><input type="button" value="Edit User" /></a>
+{% elif mem.user_name == request.user.username %}
+<a href="{% url 'articles:up_profile' mem.id %}"><input type="button" value="Update Profile" /></a>
 
-<a href="{% url 'articles:home' %}"><input type="button" value="Home" /></a></td>
+<a href="{% url 'articles:withdraw' %}"><input type="button" value="Make Gold" /></a>
+
+<a href="{% url 'articles:timeline' %}"><input type="button" value="timeline" /></a></td> 
 {%else%}
 <td> You are not {{mem.user_name}} to edit this</td>
 {%endif%}
 
 </tr>
-
+<!--
 <tr>
 <td colspan="100">
 
@@ -58,9 +73,9 @@
 </div>
 
 </td>
-</tr>
+</tr> -->
 
-{% endfor %}
+<!-- % endfor % -->
 <!-- Profile End -->
 
 </tr>

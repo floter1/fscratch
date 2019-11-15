@@ -1,0 +1,103 @@
+{% include 'home/html/header.html'  %}
+
+
+<center>
+<table width="95%" border="0" 
+cellspacing="50px"
+style="background-color: white;
+border-radius: 20px">
+
+{{ request.user.username }}
+{% for product in products  %}
+
+<tr>
+<td >
+<div><center>
+<img src="media/{{ product.pic1 }}" class="img-rectangle" height="192px" width="96px"></center>
+</div>
+</td>
+
+<td >
+<div><center>
+<img src="media/{{ product.pic2 }}" class="img-rectangle" height="192px" width="96px"></center>
+</div>
+</td>
+
+<td >
+<div><center>
+<img src="media/{{ product.pic3 }}" class="img-rectangle" height="192px" width="96px"></center>
+</div>
+</td>
+</tr>
+<tr>
+{% autoescape off %}
+<td colspan="100">
+
+<hr/>
+<div width="192px">
+{{ product.desc|linebreaks }}
+</div>
+</td> 
+{% endautoescape %}
+</tr>  
+
+<tr>
+<td colspan="100">
+
+<div>Post ID: {{ product.id }} </div>
+<div>Title: {{ product.name }} </div>
+<div>Seller: {{ product.owner }} </div>
+<div>type: {{ product.type }} </div>
+<div>category: {{ product.category }} </div>
+<div>price: {{ product.price }} </div>
+<div>markup: {{ product.markup }} </div>
+<div>referal: {{ product.referal }} </div>
+<div>Hi {{request.user.username}}, Thank you for reading.</div>
+
+</td>
+</tr> 
+
+<tr>
+{% if request.user.username == "chris" %}
+<td>
+<a href="{% url 'articles:proddelete' product.id %}"><input type="button" value="delete" /></a>
+</td>
+<td>
+<a href="{% url 'articles:produpdate' product.id %}"><input type="button" value="edit" /></a>
+</td>
+
+{% elif product.owner == request.user.username %}
+
+<td>
+<a href="{% url 'articles:produpdate' product.id %}"><input type="button" value="edit" /></a>
+</td>
+
+
+{%else%}
+<td> You are not {{product.owner}} to edit this</td>
+{%endif%}
+</tr>
+
+{% endfor %}
+<br/>
+
+
+</table>
+</center>
+
+
+
+
+
+{% if request.user.username == "" %}
+<a href="{% url 'articles:login1' %}"><input type="button" value="Login" /></a>
+
+{%else%}
+<br/>
+<a href="{% url 'articles:prodcreate' %}"> <input type="button" value="create" /> </a>
+<br/>
+
+{%endif%}
+
+
+{% include 'home/html/footer.html'  %}
