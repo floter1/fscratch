@@ -1,18 +1,19 @@
 {% include 'home/html/header.html'  %}
-
+{%csrf_token%}
 
 <center>
 <table width="95%" border="0" 
 cellspacing="50px"
 style="background-color: white;
-border-radius: 20px">
+border-radius: 20px;">
 
-{{ request.user.username }}
-{% for product in products  %}
+
+
+
 
 <tr>
 <td >
-<div><center>
+<div><center> 
 <img src="media/{{ product.pic1 }}" class="img-rectangle" height="192px" width="96px"></center>
 </div>
 </td>
@@ -78,7 +79,7 @@ border-radius: 20px">
 {%endif%}
 </tr>
 
-{% endfor %}
+
 <br/>
 
 

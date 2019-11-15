@@ -46,6 +46,7 @@ urlpatterns = [
 
 #Shop Start
 	path('', views.prodhome, name='prodhome'),
+	path('proddetail/<int:prodId>', views.proddetail, name='proddetail'),
 	path('prodcreate', views.prodcreate, name='prodcreate'),
 	path('proddelete/<int:prodId>', views.proddelete, name='proddelete'),
 	path('produpdate/<int:prodId>', views.produpdate, name='produpdate'),

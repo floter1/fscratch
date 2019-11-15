@@ -430,7 +430,7 @@ def delete_user(request, usrId):
 	home.del_user(request, usrId)
 	return redirect('articles:users_home') 
 
-def profile(request, memId):
+def profile(request):
     
 #    from urllib.request import urlopen
 #    import json
@@ -445,11 +445,11 @@ def profile(request, memId):
 		return redirect('articles:login1')	
 
 	else:
-	
-		user1 = Members.objects.get(id=memId)
+		 
+		user1 = Members.objects.get(user_name = request.user.username)
 
 #		home.show_profile(request)
-		template = "users_profile.html" 
+		template = "users_profile.html" 	
 		context = { 
 			'mem' : user1
 			}
@@ -520,20 +520,41 @@ def prodhome(request):
 
 		product_list = Product.objects.all()
 
-		template = "producthome.html" 
+		template = "product_home.html" 
 		context = { 
 			'products' : product_list 
 			}
 		
 		return render(request, template, context)
 
+
+def proddetail(request, prodId): 
+	""" 
+	Get data from models.py 
+	""" 
+	if not request.user.is_authenticated:
+
+		return redirect('articles:login1')	
+
+	else:
+
+		product_list = Product.objects.get(id=prodId)
+
+		template = "product_detail.html" 
+		context = { 
+			'product' : product_list 
+			}
+		
+		return render(request, template, context)
+
+		
 def prodcreate(request):
 	"""
 	Get data from models.py
 	"""
 	
 	home = HomeViewModel()
-	template = "productmake.html"
+	template = "product_make.html"
 	if request.method=='GET':
 		return render(request, template)
 	else:
@@ -544,7 +565,7 @@ def prodcreate(request):
 def produpdate(request, prodId):
 
 	home = HomeViewModel()
-	template = "productmake.html"
+	template = "product_make.html"
 	context = {
 		'products' : home.get_product_by_id(prodId)
 	}
