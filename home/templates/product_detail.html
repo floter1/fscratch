@@ -2,7 +2,7 @@
 {%csrf_token%}
 
 <center>
-<table width="95%" border="0" 
+<table class="alert alert-success fade in" width="95%" border="0" 
 cellspacing="50px"
 style="background-color: white;
 border-radius: 20px;">
@@ -12,21 +12,22 @@ border-radius: 20px;">
 
 
 <tr>
+
 <td >
-<div><center> 
-<img src="media/{{ product.pic1 }}" class="img-rectangle" height="192px" width="96px"></center>
+<div class="container-fluid" style="background-image: url(''); background-size: cover;"><center> 
+<img src="/media/{{ product.pic1 }}" class="img-rectangle" height="192px" width="96px"></center>
 </div>
 </td>
 
 <td >
-<div><center>
-<img src="media/{{ product.pic2 }}" class="img-rectangle" height="192px" width="96px"></center>
+<div class="container-fluid" style="background-image: url(''); background-size: cover;" ><center>
+<img src="/media/{{ product.pic2 }}" class="img-rectangle" style="height: 192px; width: inherit;"></center>
 </div>
 </td>
 
 <td >
-<div><center>
-<img src="media/{{ product.pic3 }}" class="img-rectangle" height="192px" width="96px"></center>
+<div class="container-fluid" style="background-image: url(''); background-size: cover;" ><center>
+<img src="/media/{{ product.pic3 }}" class="img-rectangle" height="192px" width="96px"></center>
 </div>
 </td>
 </tr>
@@ -35,8 +36,10 @@ border-radius: 20px;">
 <td colspan="100">
 
 <hr/>
-<div width="192px">
+<div class="thumbnail">
+<div class="row-sm-1 well" width="192px">
 {{ product.desc|linebreaks }}
+</div>
 </div>
 </td> 
 {% endautoescape %}
@@ -45,15 +48,18 @@ border-radius: 20px;">
 <tr>
 <td colspan="100">
 
-<div>Post ID: {{ product.id }} </div>
-<div>Title: {{ product.name }} </div>
-<div>Seller: {{ product.owner }} </div>
-<div>type: {{ product.type }} </div>
-<div>category: {{ product.category }} </div>
-<div>price: {{ product.price }} </div>
-<div>markup: {{ product.markup }} </div>
-<div>referal: {{ product.referal }} </div>
-<div>Hi {{request.user.username}}, Thank you for reading.</div>
+<div class="thumbnail">
+<div class="row-sm-1 well">Product ID: {{ product.id }} </div>
+<div class="row-sm-1 well">Name: {{ product.name }} </div>
+<div class="row-sm-1 well">Seller: {{ product.owner }} </div>
+<div class="row-sm-1 well">type: {{ product.type }} </div>
+<div class="row-sm-1 well">category: {{ product.category }} </div>
+<div class="row-sm-1 well">price: {{ product.price }} </div>
+<div class="row-sm-1 well">markup: {{ product.markup }} </div>
+<div class="row-sm-1 well">referal: {{ product.referal }} </div>
+</div>
+
+<a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
 
 </td>
 </tr> 
@@ -61,16 +67,16 @@ border-radius: 20px;">
 <tr>
 {% if request.user.username == "chris" %}
 <td>
-<a href="{% url 'articles:proddelete' product.id %}"><input type="button" value="delete" /></a>
+<a href="{% url 'articles:proddelete' product.id %}"><input class="btn btn-primary" type="button" value="delete" /></a>
 </td>
 <td>
-<a href="{% url 'articles:produpdate' product.id %}"><input type="button" value="edit" /></a>
+<a href="{% url 'articles:produpdate' product.id %}"><input class="btn btn-primary" type="button" value="edit" /></a>
 </td>
 
 {% elif product.owner == request.user.username %}
 
 <td>
-<a href="{% url 'articles:produpdate' product.id %}"><input type="button" value="edit" /></a>
+<a href="{% url 'articles:produpdate' product.id %}"><input class="btn btn-primary" type="button" value="edit" /></a>
 </td>
 
 
@@ -91,11 +97,11 @@ border-radius: 20px;">
 
 
 {% if request.user.username == "" %}
-<a href="{% url 'articles:login1' %}"><input type="button" value="Login" /></a>
+<a href="{% url 'articles:login1' %}"><input class="btn btn-primary" type="button" value="Login" /></a>
 
 {%else%}
 <br/>
-<a href="{% url 'articles:prodcreate' %}"> <input type="button" value="create" /> </a>
+<a href="{% url 'articles:prodcreate' %}"> <input class="btn btn-primary" type="button" value="create" /> </a>
 <br/>
 
 {%endif%}

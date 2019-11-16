@@ -6,36 +6,38 @@
 
   
   
-<table width="95%" border="0" 
+<table class="form-group" width="95%" border="0" 
 cellspacing="90px"
 style="background-color: white;
 border-radius: 20px">
 
-<tr>
-<td>Primary Pic</td><td><input type="file" name="photo1" value="{{products.pic1}}/>" </td>
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">Primary Pic</td><td class="col-sm-2 well"><input class="form-control" type="file" name="photo1" value="{{products.pic1}}/>" </td>
 </tr>
-<tr>
-<td>2nd Pic</td><td><input type="file" name="photo2" value="{{products.pic2}}"/> </td>
+
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">2nd Pic</td><td class="col-sm-2 well"><input class="form-control" type="file" name="photo2" value="{{products.pic2}}"/> </td>
 </tr>
-<tr>
-<td>3nd Pic</td><td><input type="file" name="photo3" value="{{products.pic3}}"/> </td>
+
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">3nd Pic</td><td class="col-sm-2 well"><input class="form-control" type="file" name="photo3" value="{{products.pic3}}"/> </td>
 </tr>
 
 
-<tr>
-<td>Product Name</td><td><input type="text" name="name" value="{{products.name}}"/></td>
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">Product Name</td><td class="col-sm-2 well"><input class="form-control" class="form-control" type="text" name="name" value="{{products.name}}"/></td>
 </tr>
 
-<tr>
-<td>Type</td><td><input type="text" name="prodtype" value="{{products.type}}"/></td>
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">Type</td><td class="col-sm-2 well"><input class="form-control" type="text" name="prodtype" value="{{products.type}}"/></td>
 </tr>
 
-<tr>
-<td>category</td><td><input type="text" name="prodcat" value="{{products.category}}"/></td>
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">category</td><td class="col-sm-2 well"><input class="form-control" type="text" name="prodcat" value="{{products.category}}"/></td>
 </tr>
 
-<tr>
-<td>description</td><td><input type="text" name="proddesc" value="{{products.desc}}"/></td>
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">description</td><td class="col-sm-2 well"><input class="form-control" type="text" name="proddesc" value="{{products.desc}}"/></td>
 </tr>
 
 
@@ -55,25 +57,25 @@ document.getElementById("prod_price2").innerHTML = total + " plus " + system_fee
 
 </script>
 
-<tr>
-<td>Product Original Price</td><td><input type="text" onchange="Price_comp();" id="orig_price" name="origprice" value="{{products.origprice}}"/> </td>
+<tr class="row-sm-1 well">
+<td class="col-sm-1 well">Product Original Price</td><td class="col-sm-2 well"><input class="form-control" type="text" onchange="Price_comp();" id="orig_price" name="origprice" value="{{products.origprice}}"/> </td>
 </tr>
 
 
-<tr>
-<td>fixed markup = </td><td><input type="text" onchange="Price_comp();" id="prod_markup" name="markup" value="{{products.markup}}"/> </td>
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">fixed markup = </td><td class="col-sm-2 well"><input class="form-control" type="text" onchange="Price_comp();" id="prod_markup" name="markup" value="{{products.markup}}"/> </td>
+</tr>
 
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">% referal = </td><td class="col-sm-2 well"><input class="form-control" type="text" onchange="Price_comp();" id="prod_ref" name="referal" value="{{products.referal}}"/> </td>
+</tr>
 
-<tr>
-<td>% referal = </td><td><input type="text" onchange="Price_comp();" id="prod_ref" name="referal" value="{{products.referal}}"/> </td>
+<tr class="row-sm-1 well">
+<td class="col-sm-2 well">Selling Price: </td><td class="col-sm-2 well"><div id="prod_price2">{{products.price}}</div><div><input type="hidden" id="prod_price1" name="price" value="{{products.price}}"/></div> </td>
 </tr>
 
 <tr>
-<td>price</td><td><div id="prod_price2">{{products.price}}</div><div><input type="hidden" id="prod_price1" name="price" value="{{products.price}}"/></div> </td>
-</tr>
-
-<tr>
-<td colspan="100"><center><input type="submit" value="submit"/></center></td>
+<td colspan="100"><center><input class="btn btn-primary" type="submit" value="submit"/></center></td>
 </tr>
 
 </table>
