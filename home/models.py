@@ -128,8 +128,37 @@ class Product(models.Model):
 	
 #Online Shop End
 
+#EMS Kaseong Start
+class Student(models.Model):
+	user_name = models.CharField(max_length = 250)
+	first_name = models.CharField(max_length = 250)
+	last_name = models.CharField(max_length = 250)
+	age = models.CharField(max_length = 250)
 
-
+class Guardian(models.Model):
+	user_name = models.CharField(max_length = 250)
+	first_name = models.CharField(max_length = 250)
+	last_name = models.CharField(max_length = 250)
+	age = models.CharField(max_length = 250)	
+	
+class Teacher(models.Model):
+	user_name = models.CharField(max_length = 250)
+	first_name = models.CharField(max_length = 250)
+	last_name = models.CharField(max_length = 250)
+	age = models.CharField(max_length = 250)	
+	
+class Subject(models.Model):
+	name = models.CharField(max_length = 250)
+	schedule = models.CharField(max_length = 250)
+	room = models.CharField(max_length = 250)	
+	
+class Section(models.Model):
+	user_name = models.CharField(max_length = 250)
+	first_name = models.CharField(max_length = 250)
+	last_name = models.CharField(max_length = 250)
+	age = models.CharField(max_length = 250)	
+	
+#EMS Kaseong End
 
 
 

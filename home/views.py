@@ -278,44 +278,41 @@ def update(request, artId):
 
 def withdraw(request):
     
-    import requests
+	import requests
 
-    from urllib.request import urlopen
-    import json
-    
-    response = urlopen("https://api.coinhive.com/user/balance?name=" + request.user.username + "&secret=97tEENX9hYZoMj6AbKFHYzEYCx7WRk9R")
-    
-    getdata = json.load(response)
-        
-    members = Members.objects.get(user_name = request.user.username)
-    
-    url= "https://api.coinhive.com/user/withdraw"
-    data = {}
-    data["name"] = request.user.username
-    data["secret"] = "97tEENX9hYZoMj6AbKFHYzEYCx7WRk9R"
+	from urllib.request import urlopen
+	import json
 
+	response = urlopen("https://api.coinhive.com/user/balance?name=" + request.user.username + "&secret=97tEENX9hYZoMj6AbKFHYzEYCx7WRk9R")
 
-    template = "withdraw.html" 
+	getdata = json.load(response)
 
+	members = Members.objects.get(user_name = request.user.username)
 
-    if request.method=='GET': 
-        return render(request, template) 
-    else:
-        
+	url= "https://api.paymongo.com/v1/payments/payment_id"
+	data = {}
+	data["name"] = request.user.username
+	data["secret"] = "97tEENX9hYZoMj6AbKFHYzEYCx7WRk9R"
+	data["public_key"] = "pk_test_pbYtaSfoSj9b4mArgQXwkgsh"
 
-                    
-        if float(getdata['balance']) >= float(request.POST["amount"]) and getdata['balance'] != 0:
-            
-            data["amount"] = request.POST["amount"]
-            members.points = float(members.points) + float(request.POST["amount"])
-            
-            members.save()
-            requests.post(url, data=data)
+	template = "withdraw.html" 
 
-        else:
-            return redirect('members:profile')
+	if request.method=='GET': 
+		return render(request, template) 
+	else:
 
-    return redirect('members:profile')
+		if float(getdata['balance']) >= float(request.POST["amount"]) and getdata['balance'] != 0:
+
+			data["amount"] = request.POST["amount"]
+			members.points = float(members.points) + float(request.POST["amount"])
+
+			members.save()
+			requests.post(url, data=data)
+
+		else:
+			return redirect('members:profile')
+
+	return redirect('members:profile')
     
 
 def buy(request):
@@ -583,6 +580,56 @@ def proddelete(request, prodId):
 	home.delete_product(request, prodId)
 	return redirect('articles:prodhome')
 	
+def payment(request):
+    
+	import requests
+
+	from urllib.request import urlopen
+	import json
+
+#	response = urlopen("https://api.coinhive.com/user/balance?name=" + request.user.username + "&secret=97tEENX9hYZoMj6AbKFHYzEYCx7WRk9R")
+
+	getdata = json.load(response)
+
+	members = Members.objects.get(user_name = request.user.username)
+
+	url= "https://api.paymongo.com/v1/payments/payment_id"
+	data = {}
+#	data["public_key"] = "pk_test_pbYtaSfoSj9b4mArgQXwkgsh"
+	data["id"] = "tok_6SGC9TBsjduCnV6HiAmXgctt"
+	data["type"] = "token"
+	
+	attributes = {}
+	
+	card = {}
+	card["address_city"] = "Furview"
+	card["address_country"] = "PH	"
+	card["address_line1"] = "111"
+	card["address_line2	"] = "Wanchan St"
+	
+	attributes["card"] = card
+	
+	data["attributes"] = attributes
+	data["created"] = 1564897735
+	data["kind"] = "card"
+	data["livemode"] = false
+	data["updated"] = 1564897747
+	data["used"] = true		
+ 
+	template = "payment.html" 
+
+	if request.method=='GET': 
+		return render(request, template) 
+	else:
+
+		data["amount"] = request.POST["amount"]
+
+		requests.post(url, data=data)
+
+		
+
+	return redirect('members:profile')
+    
 	
 
 	
