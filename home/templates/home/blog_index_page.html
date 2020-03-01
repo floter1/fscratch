@@ -5,15 +5,25 @@
 {% block body_class %}A{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
+	<div class="thumbnail">
+    <h1 class="thumbnail">{{ page.title }}</h1>
+	
+	<div class="thumbnail">
+    <div class="intro">Intro: {{ page.intro|richtext }}</div>
+	</div>
 
-    <div class="intro">{{ page.intro|richtext }}</div>
-
+	<div class="thumbnail">
+	<ol>
     {% for post in page.get_children %}
-        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
-        {{ post.specific.intro }}
-        {{ post.specific.body|richtext }}
+	<li>
+        <h1><a style="font-size: 85%;" class="" href="{% pageurl post %}"><u>{{ post.title }}.</u></a></h1>
+       <div class="label label-info">Intro: {{ post.specific.intro }} </div>
+     <!--   {{ post.specific.body|richtext }} -->
+	 <div style="font-size: 45%;"><b>blog_index_page.html</b></div>
+	 </li>
     {% endfor %}
-<p><a href="{{ page.get_parent.url }}">Return to Back</a></p>
-
+	</ol>
+	</div>
+<!-- <p><a href="{{ page.get_parent.url }}">Return to Back</a></p> -->
+	</div>
 {% endblock %}

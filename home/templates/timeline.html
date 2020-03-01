@@ -5,45 +5,46 @@
 <table border="0" 
 cellspacing="50px"
 style="background-color: white;
-border-radius: 20px">
+border-radius: 20px" class="container-fluid">
 
 {% for art in articles  %}
 <tr>
-<td>Post ID: {{ art.id }} </td>
-<td>Title: {{ art.title }} </td>
-<td>Written by: {{ art.writer }} </td>
-<td>Hi {{request.user.username}}, Thank you for reading.</td>
+<td class="form-control">
+<span class="label label-info"> {{ art.id }} Title: {{ art.title }} </span>
+<span class="label label-info"> Written by: {{ art.writer }} </span> </td>
+
 </tr> 
 <tr>
 
 {% autoescape off %}
-<td colspan="100">
-<hr/>
+<td colspan="100" class="thumbnail alert-info">
 {{ art.content|linebreaks }}
 </td> 
 {% endautoescape %}
 
+
 </tr>  
 <tr>
+<td class="label alert-info">Hi {{request.user.username}}, Thank you for reading. </td>
 {% if request.user.username == "floter1" %}
 <td>
-<a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a>
+<a href="{% url 'articles:delete' art.id %}"><input class="btn btn-primary" type="button" value="delete" /></a>
 </td>
 <td>
-<a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a>
+<a href="{% url 'articles:update' art.id %}"><input class="btn btn-primary" type="button" value="update" /></a>
 </td>
 
 {% elif art.writer == request.user.username %}
 <td>
-<!-- <a href="{% url 'articles:delete' art.id %}"><input type="button" value="delete" /></a> --> 
+<!-- <a href="{% url 'articles:delete' art.id %}"><input class="form-control" type="button" value="delete" /></a> --> 
 </td>
 <td>
-<a href="{% url 'articles:update' art.id %}"><input type="button" value="update" /></a>
+<a href="{% url 'articles:update' art.id %}"><input class="btn btn-info" type="button" value="update" /></a>
 </td>
 
 
 {%else%}
-<td> You are not {{art.writer}} to edit this</td>
+<td class="label alert-danger"> You are not {{art.writer}} to edit this</td>
 {%endif%}
 </tr>
 
@@ -59,16 +60,16 @@ border-radius: 20px">
 
 
 {% if request.user.username == "" %}
-<a href="{% url 'articles:login1' %}"><input type="button" value="Login" /></a>
+<a href="{% url 'articles:login1' %}"><input class="btn btn-primary" type="button" value="Login" /></a>
 
 {%else%}
 <br/>
-<a href="{% url 'articles:create' %}"> <input type="button" value="create" /> </a>
+<a href="{% url 'articles:create' %}"> <input class="btn btn-primary" type="button" value="create" /> </a>
 <br/>
-<!--<a href="{% url 'articles:users_home' %}"><input type="button" value="members" /></a>
+<!--<a href="{% url 'articles:users_home' %}"><input class="form-control" type="button" value="members" /></a>
 <br/>
-<a href="{% url 'articles:logout1' %}"><input type="button" value="Logout" /></a>
-<a href="{% url 'articles:register' %}"><input type="button" value="SignUp a friend" /></a>
+<a href="{% url 'articles:logout1' %}"><input class="form-control" type="button" value="Logout" /></a>
+<a href="{% url 'articles:register' %}"><input class="form-control" type="button" value="SignUp a friend" /></a>
  -->
 {%endif%}
 

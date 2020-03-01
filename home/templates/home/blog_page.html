@@ -6,13 +6,26 @@
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
+	<div class="thumbnail">
+	
+    <h1 class="thumbnail" style="text-align: center; ">{{ page.title }} .</h1>
+	
+	<div class="thumbnail">
+    <p class="meta"><b style="font-size: 85%;">Date: {{ page.date }} {{ page.hour }} </b></p>
 
-    <div class="intro">{{ page.intro }}</div>
+    <div class="intro"><b style="font-size: 85%;">Intro: {{ page.intro }}</b></div>
+	</div>
+	
+	
+	
+	<div class="thumbnail">
+    <span class="thumbnail justify-col-left">Content:</span> 
+	<span class="thumbnail justify-col-right">{{ page.body|richtext }}</span>
+	</div>
 
-    {{ page.body|richtext }}
-
-    <p><a href="{{ page.get_parent.url }}">Return to Back</a></p>
+    <p><a class="btn btn-primary" href="{{ page.get_parent.url }}">Return to Back</a></p>
+	<div style="font-size: 45%;"><b>blog_page.html</b></div>
+	</div>
+	
 
 {% endblock %}

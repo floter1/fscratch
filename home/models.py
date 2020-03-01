@@ -82,31 +82,10 @@ class Members(models.Model):
 	tin = models.CharField(max_length=250)
 	points = models.FloatField(null=True, blank=True, default=0.0)
 	money = models.FloatField(null=True, blank=True, default=0.0)
-	photos1 = models.ImageField(null=True, blank=True, upload_to='image/member/')
-
-#class UserProfile(models.model):
-#    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wagtail_userprofile')
-    
-#    avatar = models.ImageField(upload_to='avatar', default='avatars/default/default.jpg')
-    
-#    avatar = models.ImageField(
-#    	verbose_name=_('profile picture'),
-#    	upload_to=upload_avatar_to,
-#    	blank=True,
-#    	)
+	photos1 = models.ImageField(null=True, blank=True, upload_to='images/member/')
 
 #Members End
 
-
-#MissionSchool Start
-
-class Student(models.Model):
-	stud_name = models.CharField(max_length=250)
-	stud_age = models.IntegerField(null=True, blank=True, default=18)
-	stud_phone = models.CharField(max_length=250)
-
-
-#MissionSchool End
 
 #Online Shop Start
 
@@ -120,44 +99,54 @@ class Product(models.Model):
 	markup = models.FloatField(null=True, blank=True, default=0.0)
 	owner = models.TextField(max_length=250)
 	referal = models.FloatField(null=True, blank=True, default=0.0)
-	pic1 = models.ImageField(null=True, blank=True, upload_to = 'image/product/')
-	pic2 = models.ImageField(null=True, blank=True, upload_to = 'image/product/')
-	pic3 = models.ImageField(null=True, blank=True, upload_to = 'image/product/')
+	pic1 = models.ImageField(null=True, blank=True, upload_to = 'images/product/')
+	pic2 = models.ImageField(null=True, blank=True, upload_to = 'images/product/')
+	pic3 = models.ImageField(null=True, blank=True, upload_to = 'images/product/')
 
 	
 	
 #Online Shop End
 
 #EMS Kaseong Start
-class Student(models.Model):
+class Students(models.Model):
 	user_name = models.CharField(max_length = 250)
 	first_name = models.CharField(max_length = 250)
 	last_name = models.CharField(max_length = 250)
-	age = models.CharField(max_length = 250)
+	age = models.IntegerField(null=True, blank=True, default=4)
+	section = models.CharField(max_length = 250)
+	guardian = models.CharField(max_length = 250)
 
 class Guardian(models.Model):
 	user_name = models.CharField(max_length = 250)
 	first_name = models.CharField(max_length = 250)
 	last_name = models.CharField(max_length = 250)
-	age = models.CharField(max_length = 250)	
+	age = models.IntegerField(null=True, blank=True, default=18)	
 	
 class Teacher(models.Model):
 	user_name = models.CharField(max_length = 250)
 	first_name = models.CharField(max_length = 250)
 	last_name = models.CharField(max_length = 250)
-	age = models.CharField(max_length = 250)	
+	age = models.IntegerField(null=True, blank=True, default=18)	
 	
 class Subject(models.Model):
 	name = models.CharField(max_length = 250)
-	schedule = models.CharField(max_length = 250)
-	room = models.CharField(max_length = 250)	
+	units = models.FloatField(null=True, blank=True, default=0.0)
+	price = models.FloatField(null=True, blank=True, default=0.0)
 	
 class Section(models.Model):
-	user_name = models.CharField(max_length = 250)
-	first_name = models.CharField(max_length = 250)
-	last_name = models.CharField(max_length = 250)
-	age = models.CharField(max_length = 250)	
-	
+	name = models.CharField(max_length = 250)
+	teacher_name = models.CharField(max_length = 250)
+	max_students = models.CharField(max_length = 250)
+
+class Lesson(models.Model):
+	subject_name = models.CharField(max_length = 250)
+	teacher_name = models.CharField(max_length = 250)
+	student_name = models.CharField(max_length = 250)
+	student_score = models.CharField(max_length = 250)
+	room = models.CharField(max_length = 250)
+	date_sched = models.CharField(max_length = 250)
+	time_sched = models.CharField(max_length = 250)
+
 #EMS Kaseong End
 
 

@@ -2,7 +2,7 @@
 {% include 'home/html/header.html'  %}
 
 {% load static wagtailuserbar %}
-
+<div class="thumbnail">
     <div class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
@@ -16,7 +16,8 @@
         {% endblock %}
         
         
-        <div>main1</div>
+        <div><hr/></div>
+		<div style="font-size: 45%;"><b>base.html</b></div>
     </div>
-
+</div>
 {% include 'home/html/footer.html'  %}

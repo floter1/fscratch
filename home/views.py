@@ -11,18 +11,9 @@ from django.conf import settings
 
 from django.db import transaction
 
-# from Articles.models import ImageUploadForm, Upload
-
-#start
-
-#end
 
 # Create your views here.
 
-
-
-
-#From Members
 #from django.views.decorators.csrf import csrf_protect
 
 
@@ -329,28 +320,10 @@ def buy(request):
     
     members.save()
     return redirect('articles:profile') 
+	
+	
+#Start Users
 
-
-
-
-#start Members
-def users_home(request): 
- 
-	if not request.user.is_authenticated:
-
-		return redirect('articles:login1')	
-
-	else:
-		users_list = User.objects.all()
-		mem_list = Members.objects.all()
-		template = "users_home.html" 
-		context = { 
-		'users' : users_list,
-		'members' : mem_list
-		} 
-
-		return render(request, template, context)  
-		
 
 @csrf_protect
 def login1(request): 
@@ -395,17 +368,23 @@ def register(request):
 	home = HomeViewModel()
 	template = "reg_form.html" 
 	
-	if request.method=='GET': 
-		return render(request, template) 
+	if not request.user.is_authenticated:
+
+		return redirect('articles:login1')	
+
 	else:
+	
+		if request.method=='GET': 
+			return render(request, template) 
+		else:
 
-		home.create_user(request)
-		return redirect('articles:users_home')
-
+			home.create_user(request)
+			return redirect('articles:users_home')
+		
 
 def update_user(request, usrId): 
 
-#	users = User.objects.get(id=usrId) 
+
 	home = HomeViewModel()    
 
 	template = "update_form.html" 
@@ -426,8 +405,34 @@ def delete_user(request, usrId):
 	home = HomeViewModel() 
 	home.del_user(request, usrId)
 	return redirect('articles:users_home') 
+	
+def users_home(request): 
+ 
+	if not request.user.is_authenticated:
 
-def profile(request):
+		return redirect('articles:login1')	
+
+	else:
+		users_list = User.objects.all()
+		mem_list = Members.objects.all()
+		template = "users_home.html" 
+		context = { 
+		'users' : users_list,
+		'members' : mem_list
+		} 
+
+		return render(request, template, context)  
+		
+	
+
+#End Users
+
+
+#start Members
+
+
+
+def profile(request, memId):
     
 #    from urllib.request import urlopen
 #    import json
@@ -442,8 +447,13 @@ def profile(request):
 		return redirect('articles:login1')	
 
 	else:
-		 
-		user1 = Members.objects.get(user_name = request.user.username)
+		mem_create, members_list = Members.objects.get_or_create(user_name = request.user.username)
+		mem_create.save()
+		
+#		member1 = Members.objects.get(id=memId)
+		
+#		user1 = Members.objects.get(user_name = request.user.username)
+		user1 = Members.objects.get(id=memId)
 
 #		home.show_profile(request)
 		template = "users_profile.html" 	
@@ -458,27 +468,11 @@ def profile(request):
 """		
 def create_profile(request): 
 
-	template = "members_form.html" 
-	if request.method=='GET': 
-		return render(request, template) 
-	else: 
- 
-		member = Members() 
-		member.first_name = request.POST["first_name"] 
-		member.last_name = request.POST["last_name"]
-		member.age = request.POST["age"] 
-		member.email = request.POST["email"]
-		member.password = request.POST["password"]
-		member.save()
- 
 		return redirect('articles:users_home') 
 """
 
 
 def up_profile(request, memId): 
-	""" 
-	Get data from models.py 
-	""" 
 
 	home = HomeViewModel()
 #	members = Members.objects.get(id=memId) 
@@ -492,7 +486,7 @@ def up_profile(request, memId):
 	else:
 
 		home.update_profile(request, memId)
-		return redirect('articles:profile')
+		return redirect('articles:users_home')
 
 def del_profile(request, memId): 
 

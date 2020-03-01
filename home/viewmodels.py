@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import datetime
 
 from .models import Members
 from .models import Product
@@ -22,12 +23,21 @@ class HomeViewModel():
 		product.price = request.POST["price"]
 		product.markup = request.POST["markup"]
 		product.referal = request.POST["referal"]
+		
+#		date1 = datetime.today()
+		
 		if request.FILES.get("photo1"):
+			product.pic1.delete()
 			product.pic1 = request.FILES["photo1"]
+			product.pic1.name = request.POST["name"] + "primary1.jpg"
 		if request.FILES.get("photo2"):
+			product.pic2.delete()
 			product.pic2 = request.FILES["photo2"]
+			product.pic2.name = request.POST["name"] + "2.jpg"
 		if request.FILES.get("photo3"):
+			product.pic3.delete()
 			product.pic3 = request.FILES["photo3"]
+			product.pic3.name = request.POST["name"] + "3.jpg"
 		product.save()
 		
 	def create_product(self, request):
@@ -41,9 +51,14 @@ class HomeViewModel():
 		product.price = request.POST["price"]
 		product.markup = request.POST["markup"]
 		product.referal = request.POST["referal"]
-		product.pic1 = request.FILES["photo1"]
-		product.pic2 = request.FILES["photo2"]
-		product.pic3 = request.FILES["photo3"]
+		
+		if request.FILES.get("photo1"):
+			product.pic1 = request.FILES["photo1"]
+		if request.FILES.get("photo2"):
+			product.pic2 = request.FILES["photo2"]
+		if request.FILES.get("photo3"):
+			product.pic3 = request.FILES["photo3"]
+		
 		product.save()
 		saved = True
 	
@@ -56,13 +71,7 @@ class HomeViewModel():
 
 #start Members
 
-	def show_profile(self, usrId):
-#		mem_create, members_list = Members.objects.get_or_create(user_name = request.user.username)
-#		mem_create.save()        
-#		members_list = Members.objects.all().filter(user_name = request.user.username)
-		user1 = User.objects.get(id=usrId)
-#		return Members.objects.all().filter(user_name = request.user.username)
-		return Members.objects.get(user_name=user1.username)
+
 		
 	def get_profile_by_id(self, memId):
 		return Members.objects.get(id=memId)
@@ -72,14 +81,16 @@ class HomeViewModel():
 
 			members.age = request.POST["age"]
 			members.phone = request.POST["phone"]
-			members.upline = request.POST["upline"]
+#			members.upline = request.POST["upline"]
 			members.tin = request.POST["tin"]
 			if request.FILES.get("points"):
 				members.points = request.POST["points"]
 			if request.FILES.get("money"):
 				members.money = request.POST["money"]
 			if request.FILES.get("photo"):
+				members.photos1.delete()
 				members.photos1 = request.FILES["photo"]
+				members.photos1.name = members.user_name + "_profile.jpg"
 			members.save()
 
 
@@ -91,19 +102,21 @@ class HomeViewModel():
 		
 #start Users
 	def create_user(self, request):
-		user = User()
+		
 		member = Members()
 		
+		member.user_name = request.POST["username"]
+		member.upline = request.user.username
+		member.save()
+		
+		user = User()
 		user = User.objects.create_user(request.POST["username"], request.POST["email"], request.POST["password"])
 		user.first_name = request.POST["first_name"] 
 		user.last_name = request.POST["last_name"] 
 		
-		member.user_name = request.POST["username"]
-#        member.age = request.POST["age"]
-#        member.phone = request.POST["phone"]
 		
 		user.save()
-		member.save()
+		
 		
 		
 
@@ -125,4 +138,8 @@ class HomeViewModel():
 		usr.delete() 
 		
 #End Users
+
+#start IEMS
+
+#end IEMS
 		

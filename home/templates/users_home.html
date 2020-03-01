@@ -46,7 +46,7 @@ border-radius: 20px">
 
 <!-- <li><a href="{% url 'articles:delete_user' usr.id %}"><input type="button" value="Delete User" /></a></li> -->
 <li><a href="{% url 'articles:update_user' usr.id %}"><input type="button" value="Edit User" /></a></li>
-<li><a href="{% url 'articles:profile' %}"><input type="button" value="Profile" /></a></li>
+<li><a href="{% url 'articles:profile' usr.id %}"><input type="button" value="Profile" /></a></li>
 
 <li><a href="{% url 'articles:timeline' %}"><input type="button" value="timeline" /></a></li>
 </ul>

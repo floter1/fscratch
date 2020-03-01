@@ -80,11 +80,13 @@ FScratch
         
         
 
-        
-        <p><a href="{% url 'articles:profile' %}">
+	{% if members.user_name == request.user.username %}	
+        <p><a href="{% url 'articles:profile' request.user.id %}">
 		{{ request.user.username }} Profile
 		</a></p>
- 
+	{%else%}
+		--
+	{%endif%}
 
         <div class="label label-info"> </div>
         Welcome

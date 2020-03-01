@@ -3,10 +3,23 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
+from django.contrib import admin
+
+from wagtail.admin import urls as wagtailadmin_urls 
+from wagtail.core import urls as wagtail_urls 
+from wagtail.documents import urls as wagtaildocs_urls 
 
 app_name = 'articles'
 
 urlpatterns = [
+
+#Wagtail Start
+#   path('admin1/', admin.site.urls),
+#   path('wag', include(wagtailadmin_urls)),
+   path('blog/', include(wagtail_urls)),
+
+
+#End Wagtail
 
 #Friends for Sale Start	
     path('del_bprofile/<int:profId>', views.del_bprofile, name='del_bprofile'),
@@ -26,19 +39,24 @@ urlpatterns = [
 #Articles End	
 
 #Members Start
-    path('register', views.register, name='register'),
-    path('delete_user/<int:usrId>', views.delete_user, name='delete_user'),
-    path('update_user/<int:usrId>', views.update_user, name='update_user'),    
-	path('users_home', views.users_home, name='users_home'),
+
 #	path('create_profile', views.create_profile, name='create_profile'),
     path('del_profile/<int:memId>', views.del_profile, name='del_profile'),
     path('up_profile/<int:memId>', views.up_profile, name='up_profile'),
-    path('profile', views.profile, name='profile'),
+    path('profile/<int:memId>', views.profile, name='profile'),
 
     path('login1', views.login1, name='login1'),
     path('logout1', views.logout1, name='logout1'),
 
 #Members End	
+
+#Users Start
+    path('register', views.register, name='register'),
+    path('delete_user/<int:usrId>', views.delete_user, name='delete_user'),
+    path('update_user/<int:usrId>', views.update_user, name='update_user'),    
+	path('users_home', views.users_home, name='users_home'),
+#Users End	
+	
 
     path('withdraw', views.withdraw, name='withdraw'),
     path('buy', views.buy, name='buy'),
